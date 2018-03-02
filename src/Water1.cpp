@@ -76,7 +76,7 @@ int main()
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
 
     // Initialize water surface vertex data
-    int width = 100;
+    int width = 300; // 30m * 30m, vertex stride 10cm
     int vertexCount = 3 * width * width;
     auto *vertices = new float[vertexCount];
     int indexCount = 2 * 3 * width * width;
@@ -97,7 +97,7 @@ int main()
 
     int waveCount = 6;
     GerstnerWave waves[10];
-    setGersterWaveData(shader, waveCount, waves);
+    setGersterWaveData(shader, glm::vec2(0.5f, 0.5f), waveCount, waves);
 
     // Game loop
     while (!glfwWindowShouldClose(window)) {
@@ -117,7 +117,6 @@ int main()
         glm::mat4 view = gCamera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(gCamera.Zoom),
                                                 (float)gScreenWidth / gScreenHeight, 0.1f, 100.0f);
-
 
         //skybox.Draw(skyboxShader, view, projection);
 
@@ -151,9 +150,9 @@ void genWaterVertexBuffer(int width, float *vertices, unsigned int *indices)
 {
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < width; ++j) {
-            vertices[3 * (i * width + j)    ] = (i - width / 2.0f) / 4.0f;
+            vertices[3 * (i * width + j)    ] = (i - width / 2.0f) / 10.0f;
             vertices[3 * (i * width + j) + 1] = 0;
-            vertices[3 * (i * width + j) + 2] = (j - width / 2.0f) / 4.0f;
+            vertices[3 * (i * width + j) + 2] = (j - width / 2.0f) / 10.0f;
         }
     }
     for (unsigned int i = 0; i < width - 1; ++i) {

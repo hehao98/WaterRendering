@@ -34,7 +34,7 @@ struct GerstnerWave
     float s;
 };
 
-void setGersterWaveData(Shader &shader, int waveCount, GerstnerWave *waves);
+void setGersterWaveData(Shader &shader, glm::vec2 windDir, int waveCount, GerstnerWave *waves);
 
 
 // A Sine Wave is defined as:

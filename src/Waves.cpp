@@ -6,17 +6,20 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 inline float randf(float min, float max, int precision = 1000)
 {
+    if (min > max) std::swap(min, max);
     float delta = max - min;
     auto i = int(delta * precision);
     return ((float)(rand() % i) / (float)precision) + min;
 }
 
-void setGersterWaveData(Shader &shader, int waveCount, GerstnerWave *waves)
+void setGersterWaveData(Shader &shader, glm::vec2 windDir, int waveCount, GerstnerWave *waves)
 {
     srand((unsigned int)time(nullptr));
+    windDir = glm::normalize(windDir);
     shader.use();
     shader.setInt("waveCount", waveCount);
     for (int i = 0; i < waveCount; ++i) {
@@ -26,14 +29,21 @@ void setGersterWaveData(Shader &shader, int waveCount, GerstnerWave *waves)
         waves[i].Q = randf(0.3f, 0.4f);
         shader.setFloat("waves[" + std::to_string(i) + "].Q", waves[i].Q);
 
-        waves[i].D.x = randf(-1.0f, 1.0f);
-        waves[i].D.y = powf(1 - waves[i].D.x*waves[i].D.x, 0.5);
+        // The wave direction is determined by wind direction
+        // but have a random angle to the wind direction
+        float windAngle = acosf((windDir.x/sqrtf(windDir.x*windDir.x + windDir.y*windDir.y)));
+        if (windDir.y < 0) windAngle = -windAngle;
+        float waveAngle = randf(windAngle - glm::radians(45.0f),
+                                windAngle + glm::radians(45.0f));
+        waves[i].D.x = cos(waveAngle);
+        waves[i].D.y = sin(waveAngle);
         shader.setVec2("waves[" + std::to_string(i) + "].D", waves[i].D);
 
-        waves[i].s = randf(0.5f, 1.0f);
+        waves[i].s = randf(2.0f, 4.0f);
         shader.setFloat("waves[" + std::to_string(i) + "].s", waves[i].s);
 
-        waves[i].l = waves[i].A * randf(20.0f, 40.0f);
+        // Wave length range: [4.0f, 16.0f] (Metric: meter)
+        waves[i].l = waves[i].A * randf(80.0f, 160.0f);
         shader.setFloat("waves[" + std::to_string(i) + "].l", waves[i].l);
     }
 }
