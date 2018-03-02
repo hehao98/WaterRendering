@@ -19,10 +19,21 @@
 // Wrapper classes to make things a little easier
 #include "Shader.h"
 #include "Camera.h"
-#include "Texture.h"
+#include "Skybox.h"
 
-// Metrics: meter
-const int WATER_SIZE = 10;
+// A Sine Wave is defined as
+// W(x, y, t) = A * sin(dot(D, xz) * omega + t * fi)
+// where omega = 2 / wavelen, fi = 2 * speed / wavelen
+struct SineWave {
+    float maxAmp;
+    float amp;
+    glm::vec2 dir;
+    float wavelen;
+    float speed;
+    bool rising;
+    float changeRate;
+};
+
 
 // **********GLFW window related functions**********
 // Returns pointer to a initialized window with OpenGL context set up
@@ -36,8 +47,13 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double offsetX, double offsetY);
 
 // Generate vertex data for a water surface
-void genWaterVertexBuffer(int width, int vertexCount, float *vertices, 
-                          int indexCount, int *indices);
+void genWaterVertexBuffer(int width, float *vertices, unsigned int *indices);
+// Pass Wave Configuration to shader
+void setWaveData(Shader shader, int waveCount, SineWave *waves);
+void updateWaveData(Shader shader, int waveCount, SineWave *waves);
+// Generate a cube map using the 6 file paths in the vector,
+// Sequence: Right, left, top, bottom, back, front
+unsigned int generateCubeMap(std::vector<std::string> facePaths);
 
 // **********GLFW window related attributes**********
 int gScreenWidth = 800;
@@ -55,34 +71,48 @@ int main()
         return -1;
     }
 
-    Shader singleColorShader("shaders/SingleColor.vert", "shaders/SingleColor.frag");
+    Shader shader("shaders/SineWave.vert", "shaders/Water.frag");
+
+    std::vector<std::string> skyboxPaths = {
+            "textures/TropicalSunnyDay/TropicalSunnyDayLeft2048.png",
+            "textures/TropicalSunnyDay/TropicalSunnyDayRight2048.png",
+            "textures/TropicalSunnyDay/TropicalSunnyDayUp2048.png",
+            "textures/TropicalSunnyDay/TropicalSunnyDayDown2048.png",
+            "textures/TropicalSunnyDay/TropicalSunnyDayFront2048.png",
+            "textures/TropicalSunnyDay/TropicalSunnyDayBack2048.png",
+    };
+    Shader skyboxShader("shaders/SkyboxShader.vert", "shaders/SkyboxShader.frag");
+    Skybox skybox(skyboxPaths);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    gCamera.Position = glm::vec3(0.0f, 1.5f, 3.0f);
+    gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
 
-    int width = WATER_SIZE * 100;
+    // Initialize water surface vertex data
+    int width = 100;
     int vertexCount = 3 * width * width;
-    float *vertices = new float[vertexCount];
+    auto *vertices = new float[vertexCount];
     int indexCount = 2 * 3 * width * width;
-    int *indices  = new int[indexCount]; 
-
-    // Initialize water surface data
-    genWaterVertexBuffer(width, vertexCount, vertices, indexCount, indices);
-
+    auto *indices = new unsigned int[indexCount];
+    genWaterVertexBuffer(width, vertices, indices);
+    // Pass the vertex data to GPU
     unsigned int VBO, EBO, VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount, vertices, GL_STATIC_DRAW);
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount, indices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+    int waveCount = 4;
+    SineWave waves[10];
+    setWaveData(shader, waveCount, waves);
 
     // Game loop
     while (!glfwWindowShouldClose(window)) {
@@ -95,7 +125,6 @@ int main()
         processInput(window);
 
         // All the rendering starts from here
-
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -104,14 +133,24 @@ int main()
         glm::mat4 projection = glm::perspective(glm::radians(gCamera.Zoom),
                                                 (float)gScreenWidth / gScreenHeight, 0.1f, 100.0f);
 
-        singleColorShader.use();
-        singleColorShader.setMat4("view", view);
-        singleColorShader.setMat4("projection", projection);
-        singleColorShader.setMat4("model", glm::mat4(1.0f));
-        singleColorShader.setVec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
+        //skybox.Draw(skyboxShader, view, projection);
+
+        shader.use();
+        // Set vertex shader data
+        shader.setMat4("view", view);
+        shader.setMat4("projection", projection);
+        shader.setMat4("model", glm::mat4(1.0f));
+        shader.setFloat("time", (float)glfwGetTime());
+        // Set fragment shader data
+        shader.setVec3("viewPos", gCamera.Position);
+        shader.setVec3("deepWaterColor", glm::vec3(0.1137f, 0.2745f, 0.4392f));
+        shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
+
+        // updateWaveData(shader, waveCount, waves);
         glBindVertexArray(VAO);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(GL_TRIANGLES, 2 * (width-1) * (width-1), GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // Rendering Ends here
 
@@ -125,24 +164,83 @@ int main()
     return 0;
 }
 
-void genWaterVertexBuffer(int width, int vertexCount, float *vertices, 
-                          int indexCount, int *indices)
+void genWaterVertexBuffer(int width, float *vertices, unsigned int *indices)
 {
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < width; ++j) {
-            vertices[3 * (i * width + j)    ] = (i - width / 2.0f) / 100.0f;
+            vertices[3 * (i * width + j)    ] = (i - width / 2.0f) / 4.0f;
             vertices[3 * (i * width + j) + 1] = 0;
-            vertices[3 * (i * width + j) + 2] = (j - width / 2.0f) / 100.0f;
+            vertices[3 * (i * width + j) + 2] = (j - width / 2.0f) / 4.0f;
         }
     }
-    for (int i = 0; i < width - 1; ++i) {
-        for (int j = 0; j < width - 1; ++j) {
-            indices [6 * (i * width + j)    ] = i * width + j;
-            indices [6 * (i * width + j) + 1] = i * width + j + 1;
-            indices [6 * (i * width + j) + 2] = (i + 1) * width + j;
-            indices [6 * (i * width + j) + 3] = i * width + j + 1;
-            indices [6 * (i * width + j) + 4] = (i + 1) * width + j;
-            indices [6 * (i * width + j) + 5] = (i + 1) * width + j + 1;
+    for (unsigned int i = 0; i < width - 1; ++i) {
+        for (unsigned int j = 0; j < width - 1; ++j) {
+            indices[6 * (i * width + j)    ] = (i * width + j);
+            indices[6 * (i * width + j) + 1] = (i * width + j + 1);
+            indices[6 * (i * width + j) + 2] = ((i + 1) * width + j);
+            indices[6 * (i * width + j) + 3] = (i * width + j + 1);
+            indices[6 * (i * width + j) + 4] = ((i + 1) * width + j);
+            indices[6 * (i * width + j) + 5] = ((i + 1) * width + j + 1);
+        }
+    }
+}
+
+void setWaveData(Shader shader, int waveCount, SineWave *waves)
+{
+    srand((unsigned int)time(nullptr));
+    shader.use();
+    shader.setInt("waveCount", waveCount);
+    for (int i = 0; i < waveCount; ++i) {
+        waves[i].maxAmp = ((rand() % 100) + 100.0f) / 4000.0f;
+        waves[i].amp = waves[i].maxAmp;
+        shader.setFloat("waves[" + std::to_string(i) + "].amp", waves[i].amp);
+        waves[i].dir.x = (rand() % 1000) / 500.0f - 1.0f;
+        waves[i].dir.y = powf(1 - waves[i].dir.x*waves[i].dir.x, 0.5);
+        shader.setVec2("waves[" + std::to_string(i) + "].dir", waves[i].dir);
+        waves[i].wavelen = (rand() % 1000 + 500) / 2000.0f;
+        shader.setFloat("waves[" + std::to_string(i) + "].wavelen", waves[i].wavelen);
+        waves[i].speed = (rand() % 3000 + 1000) / 10000.0f;
+        shader.setFloat("waves[" + std::to_string(i) + "].speed", waves[i].speed);
+        waves[i].changeRate = (rand() % 300) / 10000.0f + 0.005f;
+        waves[i].rising = true;
+    }
+}
+
+
+
+void updateWaveData(Shader shader, int waveCount, SineWave *waves)
+{
+    static const float EPSILON = 0.0001f;
+    srand((unsigned int)time(nullptr));
+    shader.use();
+    shader.setInt("waveCount", waveCount);
+    for (int i = 0; i < waveCount; ++i) {
+        if (waves[i].amp < EPSILON && !waves[i].rising) {
+            // Reset wave
+            waves[i].maxAmp = ((rand() % 100) + 100.0f) / 4000.0f;
+            waves[i].amp = 0.0f;
+            shader.setFloat("waves[" + std::to_string(i) + "].amp", waves[i].amp);
+            waves[i].dir.x = (rand() % 1000) / 500.0f - 1.0f;
+            waves[i].dir.y = powf(1 - waves[i].dir.x * waves[i].dir.x, 0.5);
+            shader.setVec2("waves[" + std::to_string(i) + "].dir", waves[i].dir);
+            waves[i].wavelen = (rand() % 1000 + 500) / 2000.0f;
+            shader.setFloat("waves[" + std::to_string(i) + "].wavelen", waves[i].wavelen);
+            waves[i].speed = (rand() % 3000 + 1000) / 10000.0f;
+            shader.setFloat("waves[" + std::to_string(i) + "].speed", waves[i].speed);
+            waves[i].changeRate = (rand() % 300) / 10000.0f + 0.005f;
+            waves[i].rising = true;
+        }
+        else {
+            if (!waves[i].rising) {
+                waves[i].amp -= waves[i].changeRate * gDeltaTime;
+                shader.setFloat("waves[" + std::to_string(i) + "].amp", waves[i].amp);
+            } else {
+                waves[i].amp += waves[i].changeRate * gDeltaTime;
+                shader.setFloat("waves[" + std::to_string(i) + "].amp", waves[i].amp);
+                if (waves[i].amp > waves[i].maxAmp) {
+                    waves[i].rising = false;
+                }
+            }
         }
     }
 }

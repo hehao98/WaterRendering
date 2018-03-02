@@ -12,7 +12,7 @@ struct SineWave {
 layout (location = 0) in vec3 aPos;
 
 out VS_OUT {
-    vec3 fragPos;
+    vec4 fragPos;
     vec3 normal;
 } vs_out;
 
@@ -32,7 +32,7 @@ void main()
         float fi = 2 * waves[i].speed / waves[i].wavelen;
         pos.y += waves[i].amp * sin(dot(waves[i].dir, pos.xz) * omega + time * fi);
     }
-    vs_out.fragPos = pos;
+    vs_out.fragPos = model * vec4(pos, 1.0);
 
     // Calculate vertex normal
     // Given surface W(x, z, t) - y = 0
@@ -41,6 +41,7 @@ void main()
     //                 -A * dir.y * omega * cos(dot(D, xz) * omega + t * fi) )
     // Since the derivative of the sum is the sum of derivatives
     // We can directly add the normal components together to get the real normal
+    vs_out.normal = vec3(0.0, 0.0, 0.0);
     for (int i = 0; i < waveCount; ++i) {
         float omega = 2 / waves[i].wavelen;
         float fi = 2 * waves[i].speed / waves[i].wavelen;
@@ -53,6 +54,7 @@ void main()
         vs_out.normal += n;
     }
     vs_out.normal = normalize(vs_out.normal);
+    vs_out.normal = mat3(transpose(inverse(model))) * vs_out.normal;
 
     gl_Position = projection * view * model * vec4(pos, 1.0);
 }
