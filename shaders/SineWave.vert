@@ -1,8 +1,9 @@
 #version 330 core
 
+// A sine wave is:
 // W(x, z, t) = A * sin(dot(D, xz) * omega + t * fi)
 // where omega = 2 / wavelen, fi = 2 * speed / wavelen
-struct SineWave {
+struct Wave {
     float amp;
     vec2 dir;
     float wavelen;
@@ -21,7 +22,7 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform float time;
 uniform int waveCount;
-uniform SineWave waves[10];
+uniform Wave waves[10];
 
 void main()
 {

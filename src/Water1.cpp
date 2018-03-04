@@ -95,9 +95,26 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    int waveCount = 6;
+    glm::vec2 windDir = glm::vec2(0.5f, 0.5f);
+    int waveCount = 10;
     GerstnerWave waves[10];
-    setGersterWaveData(shader, glm::vec2(0.5f, 0.5f), waveCount, waves);
+    setGersterWaveData(shader, windDir, waveCount, waves);
+    for (int i = 0; i < waveCount; ++i) {
+        using namespace std;
+        cout << "Wave " << i << " attributes:" << endl;
+        cout << "Amplitude = " << waves[i].A << endl;
+        cout << "Direction = (" << waves[i].D.x << ", " << waves[i].D.y << ")" << endl;
+        cout << "Wave length = " << waves[i].l << endl;
+        cout << "Steepness = " << waves[i].Q << endl;
+        cout << "Speed = " << waves[i].s << endl;
+    }
+    int waveMapCount = 0;
+    unsigned int waveMaps[5];
+    for (int i = 0; i < waveMapCount; ++i) {
+        waveMaps[i] = genGersterWaveTexture(windDir);
+        shader.use();
+        shader.setInt("waveMaps[" + std::to_string(i) + "]", i);
+    }
 
     // Game loop
     while (!glfwWindowShouldClose(window)) {
@@ -130,6 +147,11 @@ int main()
         shader.setVec3("viewPos", gCamera.Position);
         shader.setVec3("deepWaterColor", glm::vec3(0.1137f, 0.2745f, 0.4392f));
         shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
+        shader.setInt("waveMapCount", waveMapCount);
+        for (unsigned int i = 0; i < waveMapCount; ++i) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, waveMaps[i]);
+        }
         glBindVertexArray(VAO);
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
