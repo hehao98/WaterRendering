@@ -18,11 +18,11 @@ $$
 
 这样，这个问题形式化描述和计算机的实现方案就形成了。
 
-![我自己的Gestner波实现（Shader随便写的）](https://images2018.cnblogs.com/blog/1322089/201803/1322089-20180311141708763-943979286.gif)
-
 ###二、一些简单方法
 
 只要你学过高中数学和物理，很容易就能想到使用三角函数来模拟一条水面波，多个随机的三角函数叠加就能产生一个“水面”，然而基于三角函数的水面往往显得很不真实，因为这个猜想基于水面波是简谐运动的模型，这个模型似乎简化过头了。在流体力学中，有一种波是某个理想模型下的流体微分方程的近似解，被称作Gestner波，感兴趣的读者可以查阅相关资料。Gestner波最大的优势是实现简单、容易计算，并且看上去足够逼真，是性价比很高的解决方案，在很多游戏中得到了广泛应用。缺点是让效果好看需要大量的调参工作，并且依然是高度简化的理想模型，与真实情况还有不小的差距。
+
+![我自己的Gestner波实现（Shader随便写的）](https://images2018.cnblogs.com/blog/1322089/201803/1322089-20180311141708763-943979286.gif)
 
 ### 三、统计学模型：形式化描述
 
@@ -54,10 +54,10 @@ $$
 在这“坨”公式中，我们需要控制的变量有：
 
 1. 水面的大小$L_x,L_z$.
-2. 顶点网格的密度$N,M$.
+2. 顶点网格的密度$N,M$（也是采样的精度）.
 2. 风的方向$\vec{D_{w}}$和风的速度$V_w$.
 3. 波涛汹涌的幅度$A$.
-4. 符合正态分布的两个独立随机变量$\xi_r$和$\xi_i$，均值为$0$，标准差为$1$.
+4. 符合正态分布的两个独立随机变量$\xi_r$和$\xi_i$，实验感觉0-1的正态分布效果较好.
 
 此外，还需要一个随机的偏置向量$\vec{D}(\vec{x},t)$来模拟海水的随机扰动，可以如下设置
 $$
@@ -76,9 +76,14 @@ $$
 
 ### 五、实现结果
 
-（待更）
+![DFT](https://images2018.cnblogs.com/blog/1322089/201803/1322089-20180312122502988-1347604892.gif)
+
+不出所料，$16\times16$的水面已经卡的不行了，显然是无法实用的。
+
+具体源代码请参考 https://github.com/hehao98/OceanSimulator
 
 ### 参考文献
 
 1. Tessendorf, Jerry. Simulating Ocean Water. *In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques)*, ACM Press.
 2. Keith Lantz. Ocean Simulating Part One: Using the Discrete Fourier Transform. https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/
+

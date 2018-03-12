@@ -20,9 +20,9 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Skybox.h"
+#include "TextRenderer.h"
 
 // Water related header file
-#include "Waves.h"
 #include "Ocean.h"
 
 // **********GLFW window related functions**********
@@ -53,8 +53,12 @@ int main()
         return -1;
     }
 
-    // Load water shader
+    // Load shaders
     Shader shader("shaders/SingleColor.vert", "shaders/WaterWireframe.frag");
+    Shader textShader("shaders/TextShader.vert", "shaders/TextShader.frag");
+
+    // Initialize fonts
+    TextRenderer textRenderer;
 
     // Initialize skybox
     std::vector<std::string> skyboxPaths = {
@@ -115,6 +119,7 @@ int main()
         auto currentFrame = (float)glfwGetTime();
         gDeltaTime = currentFrame - gLastFrame;
         gLastFrame = currentFrame;
+        auto currFPS = (int)(1.0f / gDeltaTime);
 
         // Handle user input
         processInput(window);
@@ -151,7 +156,17 @@ int main()
         glBindVertexArray(VAO);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        // Start to render texts
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
+                                             0.0f, (float)gScreenHeight);
+        textRenderer.renderText(textShader, "FPS: " + std::to_string(currFPS),
+                                0.0f, gScreenHeight - 48.0f*0.3f, 0.3f,
+                                glm::vec3(0.0, 1.0f, 1.0f));
+        textRenderer.renderText(textShader, "Use WSAD to move, mouse to look around",
+                                0.0f, 3.0f, 0.3f,
+                                glm::vec3(0.0, 1.0f, 1.0f));
         // Rendering Ends here
 
         glfwSwapBuffers(window);
