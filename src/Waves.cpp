@@ -14,7 +14,7 @@
 // GLFW: A library that helps us manage windows
 #include <GLFW/glfw3.h>
 
-inline float randf(float min, float max, int precision = 1000)
+static inline float randf(float min, float max, int precision = 1000)
 {
     if (min > max) std::swap(min, max);
     float delta = max - min;
@@ -22,7 +22,7 @@ inline float randf(float min, float max, int precision = 1000)
     return ((float)(rand() % i) / (float)precision) + min;
 }
 
-inline int randi(int min, int max)
+static inline int randi(int min, int max)
 {
     if (min > max) std::swap(min, max);
     return (rand() % (max - min)) + min;
