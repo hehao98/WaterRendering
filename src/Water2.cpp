@@ -79,7 +79,7 @@ int main()
 
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
 
-    Ocean ocean(glm::vec2(2.0f, 2.0f), 16, 0.2f);
+    Ocean ocean(glm::vec2(2.0f, 2.0f), 128, 0.1f);
     ocean.generateWave((float)glfwGetTime());
     // Pass the vertex data to GPU
     unsigned int VBO, VBO2, EBO, VAO;
@@ -154,11 +154,9 @@ int main()
         shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
         shader.setVec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
         glBindVertexArray(VAO);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
 
         // Start to render texts
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
                                              0.0f, (float)gScreenHeight);
         textRenderer.renderText(textShader, "FPS: " + std::to_string(currentFPS),
@@ -166,6 +164,9 @@ int main()
                                 glm::vec3(0.0, 1.0f, 1.0f));
         textRenderer.renderText(textShader, "Use WSAD to move, mouse to look around",
                                 0.0f, 3.0f, 0.3f,
+                                glm::vec3(0.0, 1.0f, 1.0f));
+        textRenderer.renderText(textShader, "Use Q to switch between polygon and fill mode",
+                                0.0f, 20.0f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
         // Rendering Ends here
 
@@ -242,6 +243,21 @@ void processInput(GLFWwindow *window)
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         gCamera.ProcessKeyboard(RIGHT, gDeltaTime);
+    }
+
+    // Some mode switches
+    static bool isPolygon = false;
+    static double lastPressedTime = 0.0;
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS
+        && glfwGetTime() - lastPressedTime > 0.1) {
+        if (isPolygon) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            isPolygon = false;
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            isPolygon = true;
+        }
+        lastPressedTime = glfwGetTime();
     }
 }
 

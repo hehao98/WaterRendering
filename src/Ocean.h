@@ -33,6 +33,8 @@ public:
     // The 3*N*N array to store normal vector results
     int normalCount;
     float *normals;
+    // The flag to control generating method
+    bool useFFT;
 private:
     float g;
     float PI;
@@ -54,9 +56,9 @@ private:
     // Returns height
     float H(float x, float z, float t);
 
-    inline std::complex<float> h(glm::vec2 k, float t);
+    std::complex<float> h(glm::vec2 k, float t);
 
-    inline std::complex<float> h0(glm::vec2 k);
+    std::complex<float> h0(glm::vec2 k);
 
     inline float normalRandom();
 

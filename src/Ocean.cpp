@@ -6,13 +6,68 @@
 
 #include <random>
 #include <iostream>
+#include <vector>
+
+static const float PI = 3.1415926f;
+
+static void bitReverseCopy(const std::vector<std::complex<float>> &a,
+                           std::vector<std::complex<float>> &A)
+{
+    auto n = (int)A.size();
+    for (int i = 0; i < n; ++i) {
+        // 0b001 -> 0b100
+        int revi = i;
+        int len = 1;
+        for (int j = 0; j < 32; ++j) {
+            if ((1 << j) == n) {
+                len = j;
+                break;
+            }
+        }
+        for (int j = 0; j < len/2; ++j) {
+            int tmp1 = (revi >> j) & 0x1;
+            int tmp2 = (revi >> (len - 1 - j)) & 0x1;
+            revi = revi & ~(1 << j);
+            revi = revi | (tmp2 << j);
+            revi = revi & ~(1 << (len - 1 - j));
+            revi = revi | (tmp1 << (len - 1 - j));
+        }
+        //cout << i << " " << revi << endl;
+        A[revi] = a[i];
+    }
+}
+
+static std::vector<std::complex<float>> iterativeFFT(const std::vector<std::complex<float>> &a)
+{
+    using namespace std;
+    auto n = a.size();
+    vector<complex<float>> A(n);
+    bitReverseCopy(a, A);
+    for (int s = 1; (1 << s) <= n; ++s) {
+        auto m = (1 << s);
+        auto wm = complex<float>(cos(2*PI/m), sin(2*PI/m));
+        for (int k = 0; k < n; k += m) {
+            complex<float> w = 1.0;
+            for (int j = 0; j < m/2; ++j) {
+                auto t = w * A[k + j + m/2];
+                auto u = A[k + j];
+                A[k + j] = u + t;
+                A[k + j + m/2] = u - t;
+                w = w * wm;
+            }
+        }
+    }
+    return A;
+}
+
 
 Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
         : w(wind), N(resolution), A(amplitude)
 {
+    useFFT = true;
     g = 9.8f;
     PI = 3.1415926f;
-    L = 20;
+    L = 30;
     unitWidth = 1.0f;
     choppy = 0.0f;
     vertexCount = normalCount = 3 * N * N;
@@ -46,6 +101,9 @@ Ocean::~Ocean()
 
 void Ocean::generateWave(float time)
 {
+    // Eliminate inital status when time accumulate from 0
+    time += 10000;
+    using namespace std;
     // Compute h buffer
     for (int n = -N / 2; n < N / 2; ++n) {
         for (int m = -N < 2; m < N / 2; ++m) {
@@ -56,27 +114,69 @@ void Ocean::generateWave(float time)
         }
     }
     // Set Wave vertices and normals seperately
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            int pos = 3 * (i * N + j);
+    if (useFFT) {
+        auto *HBuffer = new std::complex<float>[N * N];
 
-            float x = unitWidth * L * (i - N / 2.0f) / N,
-                    z = unitWidth * L * (j - N / 2.0f) / N;
+        for (int i = 0; i < N; ++i) {
+            vector<complex<float>> a(N);
+            for (int j = 0; j < N; ++j)
+                a[j] = hBuffer[i * N + j];
+            auto buf = iterativeFFT(a);
+            for (int j = 0; j < N; ++j)
+                HBuffer[i * N + j] = buf[j];
+        }
 
-            // Displacement vector
-            //glm::vec3 d = glm::vec3(0.0f,0.0f,0.0f);
-            glm::vec3 d = choppy * D(x, z, time);
+        for (int i = 0; i < N; ++i) {
+            vector<complex<float>> a(N);
+            for (int j = 0; j < N; ++j)
+                a[j] = HBuffer[j * N + i];
+            auto buf = iterativeFFT(a);
+            for (int j = 0; j < N; ++j) {
+                if ((i + j) % 2 == 0)
+                    HBuffer[j * N + i] = buf[j];
+                else
+                    HBuffer[j * N + i] = -buf[j];
+            }
+        }
 
-            vertices[pos + 0] = x + d.x;
-            vertices[pos + 1] = H(x, z, time) + d.y;
-            vertices[pos + 2] = z + d.z;
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                int pos = 3 * (i * N + j);
+                float x = unitWidth * L * (i - N / 2.0f) / N,
+                      z = unitWidth * L * (j - N / 2.0f) / N;
+                vertices[pos + 0] = x;
+                vertices[pos + 1] = HBuffer[i * N + j].real();
+                vertices[pos + 2] = z;
 
-            // Epsilon vector for calculating normals
-            glm::vec3 e = epsilon(x, z, time);
+                normals[pos + 0] = 0;
+                normals[pos + 1] = 1;
+                normals[pos + 2] = 0;
+            }
+        }
+        delete[] HBuffer;
+    } else {
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                int pos = 3 * (i * N + j);
 
-            normals[pos + 0] = -e.x;
-            normals[pos + 1] = 1;
-            normals[pos + 2] = -e.z;
+                float x = unitWidth * L * (i - N / 2.0f) / N,
+                      z = unitWidth * L * (j - N / 2.0f) / N;
+
+                // Displacement vector
+                //glm::vec3 d = glm::vec3(0.0f,0.0f,0.0f);
+                glm::vec3 d = choppy * D(x, z, time);
+
+                vertices[pos + 0] = x + d.x;
+                vertices[pos + 1] = H(x, z, time) + d.y;
+                vertices[pos + 2] = z + d.z;
+
+                // Epsilon vector for calculating normals
+                glm::vec3 e = epsilon(x, z, time);
+
+                normals[pos + 0] = -e.x;
+                normals[pos + 1] = 1;
+                normals[pos + 2] = -e.z;
+            }
         }
     }
 }
