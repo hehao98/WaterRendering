@@ -7,6 +7,7 @@
       <config projectName="Project" targetName="Water2" />
       <config projectName="Project" targetName="Water1" />
       <config projectName="Project" targetName="glfw" />
+      <config projectName="Project" targetName="FFTTest" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -15,109 +16,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="Implemented Simple DFT Ocean">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fonts/Consolas.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/libfreetype.a" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/config/ftconfig.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/config/ftheader.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/config/ftmodule.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/config/ftoption.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/config/ftstdlib.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/freetype.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftadvanc.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftbbox.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftbdf.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftbitmap.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftbzip2.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftcache.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftchapters.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftcid.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftdriver.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/fterrdef.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/fterrors.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftfntfmt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftgasp.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftglyph.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftgxval.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftgzip.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftimage.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftincrem.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftlcdfil.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftlist.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftlzw.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftmac.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftmm.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftmodapi.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftmoderr.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftotval.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftoutln.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftparams.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftpfr.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftrender.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftsizes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftsnames.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftstroke.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftsynth.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftsystem.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/fttrigon.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/fttypes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ftwinfnt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/autohint.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/cffotypes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/cfftypes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftcalc.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftdebug.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftdrv.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftgloadr.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/fthash.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftmemory.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftobjs.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftpic.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftpsprop.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftrfork.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftserv.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftstream.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/fttrace.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/ftvalid.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/internal.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/psaux.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/pshints.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svbdf.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svcfftl.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svcid.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svfntfmt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svgldict.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svgxval.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svkern.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svmetric.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svmm.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svotval.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svpfr.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svpostnm.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svprop.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svpscmap.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svpsinfo.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svsfnt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svttcmap.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svtteng.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svttglyf.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/services/svwinfnt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/sfnt.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/t1types.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/internal/tttypes.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/t1tables.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/ttnameid.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/tttables.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/freetype/tttags.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/ft2build.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shaders/TextShader.frag" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shaders/TextShader.vert" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextRenderer.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextRenderer.h" />
+    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/FFTTest.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/doc1.md" afterPath="$PROJECT_DIR$/doc/doc1.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Water2.cpp" afterPath="$PROJECT_DIR$/src/Water2.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -133,8 +35,8 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+            <state relative-caret-position="510">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -143,7 +45,7 @@
       <file leaf-file-name="TextRenderer.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TextRenderer.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
+            <state relative-caret-position="306">
               <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
               <folding>
                 <element signature="e#209#231#0" expanded="true" />
@@ -153,13 +55,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Water2.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Water2.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1151">
-              <caret line="171" column="32" lean-forward="true" selection-start-line="171" selection-start-column="32" selection-end-line="171" selection-end-column="32" />
+            <state relative-caret-position="-31">
+              <caret line="150" column="21" lean-forward="false" selection-start-line="150" selection-start-column="21" selection-end-line="150" selection-end-column="21" />
               <folding>
                 <element signature="e#465#484#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FFTTest.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-18">
+              <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+              <folding>
+                <element signature="e#127#146#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -205,13 +119,14 @@
         <option value="$PROJECT_DIR$/shaders/SingleColor.vert" />
         <option value="$PROJECT_DIR$/src/Ocean.h" />
         <option value="$PROJECT_DIR$/src/Ocean.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/build/shaders/TextShader.vert" />
         <option value="$PROJECT_DIR$/src/TextRenderer.h" />
         <option value="$PROJECT_DIR$/src/TextRenderer.cpp" />
         <option value="$PROJECT_DIR$/build/shaders/TextShader.frag" />
         <option value="$PROJECT_DIR$/src/Water2.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/FFTTest.cpp" />
       </list>
     </option>
   </component>
@@ -337,8 +252,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Water2">
+  <component name="RunManager" selected="Application.FFTTest">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+    </configuration>
+    <configuration name="FFTTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="FFTTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="FFTTest">
       <envs />
     </configuration>
     <configuration name="Test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="Test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="Test">
@@ -356,13 +274,14 @@
     <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="uninstall" CONFIG_NAME="Debug">
       <envs />
     </configuration>
-    <list size="6">
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
-      <item index="1" class="java.lang.String" itemvalue="Application.Test" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Water1" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Water2" />
-      <item index="4" class="java.lang.String" itemvalue="Application.uninstall" />
-      <item index="5" class="java.lang.String" itemvalue="Application.glfw" />
+      <item index="1" class="java.lang.String" itemvalue="Application.FFTTest" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Test" />
+      <item index="3" class="java.lang.String" itemvalue="Application.Water1" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Water2" />
+      <item index="5" class="java.lang.String" itemvalue="Application.uninstall" />
+      <item index="6" class="java.lang.String" itemvalue="Application.glfw" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -386,7 +305,9 @@
       <workItem from="1520211493016" duration="2719000" />
       <workItem from="1520749819928" duration="14613000" />
       <workItem from="1520817839917" duration="5004000" />
-      <workItem from="1520841801271" duration="3759000" />
+      <workItem from="1520841801271" duration="3863000" />
+      <workItem from="1520853050524" duration="11000" />
+      <workItem from="1521017063020" duration="6406000" />
     </task>
     <task id="LOCAL-00001" summary="Add textured wave support">
       <created>1520150876061</created>
@@ -402,29 +323,36 @@
       <option name="project" value="LOCAL" />
       <updated>1520824957053</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added text rendering support">
+      <created>1520846539021</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1520846539021</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58520000" />
+    <option name="totallyTimeSpent" value="65041000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28432956" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2253635" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -442,7 +370,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add textured wave support" />
     <MESSAGE value="Implemented Simple DFT Ocean" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Simple DFT Ocean" />
+    <MESSAGE value="Added text rendering support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added text rendering support" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -451,14 +380,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Waves.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="48" lean-forward="false" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/shaders/GerstnerWave.vert">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
@@ -477,9 +398,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2040">
           <caret line="120" column="54" lean-forward="true" selection-start-line="120" selection-start-column="54" selection-end-line="120" selection-end-column="54" />
-          <folding>
-            <marker date="1520149334977" expanded="true" signature="7028:7073" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -487,7 +405,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="45" column="48" lean-forward="false" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -510,9 +427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2380">
           <caret line="140" column="28" lean-forward="false" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="28" />
-          <folding>
-            <marker date="1520149334977" expanded="true" signature="7028:7073" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -542,9 +456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding>
-            <marker date="1520149334977" expanded="true" signature="7028:7073" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -559,9 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1520149334977" expanded="true" signature="7028:7073" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -638,7 +546,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -648,9 +555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-          <folding>
-            <element signature="e#175#197#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -679,9 +583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="739">
           <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
-          <folding>
-            <marker date="1520149334977" expanded="true" signature="7028:7073" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -717,7 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -725,7 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -734,7 +633,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="153">
             <caret line="9" column="125" lean-forward="false" selection-start-line="9" selection-start-column="125" selection-end-line="9" selection-end-column="125" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -744,7 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="43" lean-forward="false" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,9 +656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="778">
           <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
-          <folding>
-            <element signature="e#39#57#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -770,13 +663,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-203">
           <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TextRenderer.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
+        <state relative-caret-position="306">
           <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
           <folding>
             <element signature="e#209#231#0" expanded="true" />
@@ -789,26 +681,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-892">
           <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding>
-            <element signature="e#39#64#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+        <state relative-caret-position="510">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1151">
-          <caret line="171" column="32" lean-forward="true" selection-start-line="171" selection-start-column="32" selection-end-line="171" selection-end-column="32" />
+        <state relative-caret-position="-31">
+          <caret line="150" column="21" lean-forward="false" selection-start-line="150" selection-start-column="21" selection-end-line="150" selection-end-column="21" />
           <folding>
             <element signature="e#465#484#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+          <folding>
+            <element signature="e#127#146#0" expanded="true" />
           </folding>
         </state>
       </provider>

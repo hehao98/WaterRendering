@@ -27,4 +27,6 @@ add_executable(Water2
         src/TextRenderer.cpp
         src/glad.c)
 target_link_libraries(Water2 glfw ${OPENGL_gl_LIBRARY} ${FREETYPE_LIBRARIES}
-        libbz2.dylib libz.dylib) # Things needed for Freetype
+        libbz2.dylib libz.dylib) # Things needed for Freetype on Mac OS X
+
+add_executable(FFTTest src/FFTTest.cpp)

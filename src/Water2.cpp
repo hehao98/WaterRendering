@@ -119,7 +119,7 @@ int main()
         auto currentFrame = (float)glfwGetTime();
         gDeltaTime = currentFrame - gLastFrame;
         gLastFrame = currentFrame;
-        auto currFPS = (int)(1.0f / gDeltaTime);
+        auto currentFPS = (int)(1.0f / gDeltaTime);
 
         // Handle user input
         processInput(window);
@@ -161,7 +161,7 @@ int main()
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
                                              0.0f, (float)gScreenHeight);
-        textRenderer.renderText(textShader, "FPS: " + std::to_string(currFPS),
+        textRenderer.renderText(textShader, "FPS: " + std::to_string(currentFPS),
                                 0.0f, gScreenHeight - 48.0f*0.3f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
         textRenderer.renderText(textShader, "Use WSAD to move, mouse to look around",
