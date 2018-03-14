@@ -158,7 +158,7 @@ int main()
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
 
         // Start to render texts
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
                                              0.0f, (float)gScreenHeight);
         textRenderer.renderText(textShader, "FPS: " + std::to_string(currentFPS),

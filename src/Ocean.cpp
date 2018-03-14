@@ -12,7 +12,7 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
 {
     g = 9.8f;
     PI = 3.1415926f;
-    L = 10;
+    L = 20;
     unitWidth = 1.0f;
     choppy = 0.0f;
     vertexCount = normalCount = 3 * N * N;
@@ -20,6 +20,8 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     vertices = new float[vertexCount];
     normals  = new float[normalCount];
     indices  = new unsigned int[indexCount];
+    hBuffer = new std::complex<float>[N * N];
+    kBuffer = new glm::vec2[N * N];
     // Precompute indices
     for (unsigned int i = 0; i < N - 1; ++i) {
         for (unsigned int j = 0; j < N - 1; ++j) {
@@ -38,10 +40,21 @@ Ocean::~Ocean()
     delete[] vertices;
     delete[] normals;
     delete[] indices;
+    delete[] hBuffer;
+    delete[] kBuffer;
 }
 
 void Ocean::generateWave(float time)
 {
+    // Compute h buffer
+    for (int n = -N / 2; n < N / 2; ++n) {
+        for (int m = -N < 2; m < N / 2; ++m) {
+            glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
+            int bufferIndex = (n + N/2) * N + m + N/2;
+            kBuffer[bufferIndex] = k;
+            hBuffer[bufferIndex] = h(k, time);
+        }
+    }
     // Set Wave vertices and normals seperately
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
@@ -74,10 +87,11 @@ float Ocean::H(float x, float z, float t)
     complex<float> result(0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
         for (int m = -N < 2; m < N / 2; ++m) {
-            glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
+            int bufferIndex = (n + N/2) * N + m + N/2;
+            glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(k, glm::vec2(x, z));
 
-            result += h(k, t) * complex<float>(cos(k_dot_x), sin(k_dot_x));
+            result += hBuffer[bufferIndex] * complex<float>(cos(k_dot_x), sin(k_dot_x));
         }
     }
     return result.real();
@@ -133,10 +147,12 @@ glm::vec3 Ocean::epsilon(float x, float z, float t)
     glm::vec3 result(0.0f, 0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
         for (int m = -N < 2; m < N / 2; ++m) {
-            glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
+            int bufferIndex = (n + N/2) * N + m + N/2;
+            glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(glm::vec2(x, z), k);
 
-            complex<float> tmp = h(k, t) * complex<float>(cos(k_dot_x), sin(k_dot_x));
+            complex<float> tmp = hBuffer[bufferIndex]
+                                 * complex<float>(cos(k_dot_x), sin(k_dot_x));
 
             glm::vec2 v = -tmp.imag() * k;
             result.x += v.x;
@@ -152,10 +168,12 @@ glm::vec3 Ocean::D(float x, float z, float t)
     glm::vec3 result(0.0f, 0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
         for (int m = -N < 2; m < N / 2; ++m) {
-            glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
+            int bufferIndex = (n + N/2) * N + m + N/2;
+            glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(glm::vec2(x, z), k);
 
-            complex<float> tmp = h(k, t) * complex<float>(sinf(k_dot_x), -cosf(k_dot_x));
+            complex<float> tmp = hBuffer[bufferIndex]
+                                 * complex<float>(sin(k_dot_x), -cos(k_dot_x));
 
             glm::vec2 v = (tmp.real()/glm::length(k)) * k;
             result.x += v.x;

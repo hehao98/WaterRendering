@@ -17,9 +17,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/FFTTest.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/doc1.md" afterPath="$PROJECT_DIR$/doc/doc1.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.cpp" afterPath="$PROJECT_DIR$/src/Ocean.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.h" afterPath="$PROJECT_DIR$/src/Ocean.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Water2.cpp" afterPath="$PROJECT_DIR$/src/Water2.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -42,14 +43,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextRenderer.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/TextRenderer.h">
+      <file leaf-file-name="FFTTest.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+            <state relative-caret-position="766">
+              <caret line="105" column="25" lean-forward="false" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
               <folding>
-                <element signature="e#209#231#0" expanded="true" />
-                <element signature="e#427#449#0" expanded="true" />
+                <element signature="e#127#146#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -58,8 +58,8 @@
       <file leaf-file-name="Water2.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-31">
-              <caret line="150" column="21" lean-forward="false" selection-start-line="150" selection-start-column="21" selection-end-line="150" selection-end-column="21" />
+            <state relative-caret-position="-547">
+              <caret line="162" column="17" lean-forward="false" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="17" />
               <folding>
                 <element signature="e#465#484#0" expanded="true" />
               </folding>
@@ -67,14 +67,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FFTTest.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
+      <file leaf-file-name="Ocean.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Ocean.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-18">
-              <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+            <state relative-caret-position="472">
+              <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
               <folding>
-                <element signature="e#127#146#0" expanded="true" />
+                <element signature="e#229#251#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ocean.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Ocean.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2043">
+              <caret line="182" column="18" lean-forward="true" selection-start-line="182" selection-start-column="18" selection-end-line="182" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,16 +127,16 @@
         <option value="$PROJECT_DIR$/src/OceanHeightField.cpp" />
         <option value="$PROJECT_DIR$/src/OceanHeightField.h" />
         <option value="$PROJECT_DIR$/shaders/SingleColor.vert" />
-        <option value="$PROJECT_DIR$/src/Ocean.h" />
-        <option value="$PROJECT_DIR$/src/Ocean.cpp" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/build/shaders/TextShader.vert" />
         <option value="$PROJECT_DIR$/src/TextRenderer.h" />
         <option value="$PROJECT_DIR$/src/TextRenderer.cpp" />
         <option value="$PROJECT_DIR$/build/shaders/TextShader.frag" />
-        <option value="$PROJECT_DIR$/src/Water2.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/FFTTest.cpp" />
+        <option value="$PROJECT_DIR$/src/Water2.cpp" />
+        <option value="$PROJECT_DIR$/src/Ocean.cpp" />
+        <option value="$PROJECT_DIR$/src/Ocean.h" />
       </list>
     </option>
   </component>
@@ -307,7 +317,7 @@
       <workItem from="1520817839917" duration="5004000" />
       <workItem from="1520841801271" duration="3863000" />
       <workItem from="1520853050524" duration="11000" />
-      <workItem from="1521017063020" duration="6406000" />
+      <workItem from="1521017063020" duration="9076000" />
     </task>
     <task id="LOCAL-00001" summary="Add textured wave support">
       <created>1520150876061</created>
@@ -330,11 +340,18 @@
       <option name="project" value="LOCAL" />
       <updated>1520846539021</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added FFT reference implementation">
+      <created>1521026743552</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1521026743552</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65041000" />
+    <option name="totallyTimeSpent" value="67711000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -346,7 +363,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -371,7 +388,8 @@
     <MESSAGE value="Add textured wave support" />
     <MESSAGE value="Implemented Simple DFT Ocean" />
     <MESSAGE value="Added text rendering support" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added text rendering support" />
+    <MESSAGE value="Added FFT reference implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added FFT reference implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -652,17 +670,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ocean.cpp">
+    <entry file="file://$PROJECT_DIR$/src/TextRenderer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
-          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ocean.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-203">
-          <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state relative-caret-position="-892">
+          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -671,16 +682,9 @@
         <state relative-caret-position="306">
           <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
           <folding>
-            <element signature="e#209#231#0" expanded="true" />
-            <element signature="e#427#449#0" expanded="true" />
+            <element signature="e#209#231#0" expanded="false" />
+            <element signature="e#427#449#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TextRenderer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-892">
-          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -692,22 +696,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="766">
+          <caret line="105" column="25" lean-forward="false" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
+          <folding>
+            <element signature="e#127#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ocean.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2043">
+          <caret line="182" column="18" lean-forward="true" selection-start-line="182" selection-start-column="18" selection-end-line="182" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-31">
-          <caret line="150" column="21" lean-forward="false" selection-start-line="150" selection-start-column="21" selection-end-line="150" selection-end-column="21" />
+        <state relative-caret-position="-547">
+          <caret line="162" column="17" lean-forward="false" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="17" />
           <folding>
             <element signature="e#465#484#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FFTTest.cpp">
+    <entry file="file://$PROJECT_DIR$/src/Ocean.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+        <state relative-caret-position="472">
+          <caret line="49" column="44" lean-forward="false" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
           <folding>
-            <element signature="e#127#146#0" expanded="true" />
+            <element signature="e#229#251#0" expanded="true" />
           </folding>
         </state>
       </provider>
