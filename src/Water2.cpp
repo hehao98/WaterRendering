@@ -43,7 +43,9 @@ int gScreenHeight = 600;
 float gDeltaTime = 0.0f;
 float gLastFrame = 0.0f;
 
+// Global vaiables and flags
 Camera gCamera;
+bool gDrawNormals = false;
 
 int main()
 {
@@ -56,6 +58,8 @@ int main()
     // Load shaders
     Shader shader("shaders/SingleColor.vert", "shaders/WaterWireframe.frag");
     Shader textShader("shaders/TextShader.vert", "shaders/TextShader.frag");
+    Shader normalShader("shaders/DrawNormal.vert", "shaders/DrawNormal.frag",
+                        "shaders/DrawNormal.geom");
 
     // Initialize fonts
     TextRenderer textRenderer;
@@ -79,7 +83,7 @@ int main()
 
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
 
-    Ocean ocean(glm::vec2(2.0f, 2.0f), 128, 0.1f);
+    Ocean ocean(glm::vec2(2.0f, 2.0f), 64, 0.1f);
     ocean.generateWave((float)glfwGetTime());
     // Pass the vertex data to GPU
     unsigned int VBO, VBO2, EBO, VAO;
@@ -156,6 +160,16 @@ int main()
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
 
+        // Draw normals for debugging
+        if (gDrawNormals) {
+            normalShader.use();
+            normalShader.setMat4("view", view);
+            normalShader.setMat4("projection", projection);
+            normalShader.setMat4("model", glm::mat4(1.0f));
+            glBindVertexArray(VAO);
+            glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
+        }
+
         // Start to render texts
         textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
                                              0.0f, (float)gScreenHeight);
@@ -163,10 +177,13 @@ int main()
                                 0.0f, gScreenHeight - 48.0f*0.3f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
         textRenderer.renderText(textShader, "Use WSAD to move, mouse to look around",
-                                0.0f, 3.0f, 0.3f,
+                                0.0f, 2.0f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
         textRenderer.renderText(textShader, "Use Q to switch between polygon and fill mode",
-                                0.0f, 20.0f, 0.3f,
+                                0.0f, 18.0f, 0.3f,
+                                glm::vec3(0.0, 1.0f, 1.0f));
+        textRenderer.renderText(textShader, "Use E to decide whether to draw normals",
+                                0.0f, 34.0f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
         // Rendering Ends here
 
@@ -249,7 +266,7 @@ void processInput(GLFWwindow *window)
     static bool isPolygon = false;
     static double lastPressedTime = 0.0;
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS
-        && glfwGetTime() - lastPressedTime > 0.1) {
+        && glfwGetTime() - lastPressedTime > 0.2) {
         if (isPolygon) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             isPolygon = false;
@@ -257,6 +274,12 @@ void processInput(GLFWwindow *window)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             isPolygon = true;
         }
+        lastPressedTime = glfwGetTime();
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS
+        && glfwGetTime() - lastPressedTime > 0.2) {
+        gDrawNormals = !gDrawNormals;
         lastPressedTime = glfwGetTime();
     }
 }

@@ -20,7 +20,7 @@ void main()
     for (int i = 0; i < waveMapCount; ++i)
         n += vec3(texture(waveMaps[i], fs_in.fragPos.xz / 10.0));
     vec3 eyeVec = normalize(viewPos - vec3(fs_in.fragPos));
-    float facing = clamp(dot(eyeVec, normalize(n)), 0.0, 1.0);
+    float facing = clamp(dot(normalize(vec3(1.0, 1.0, 1.0)), normalize(n)), 0.0, 1.0);
     fragColor = vec4(mix(shallowWaterColor, deepWaterColor, facing), 1.0);
     //fragColor = vec4(n, 1.0);
 }

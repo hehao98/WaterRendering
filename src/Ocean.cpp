@@ -67,16 +67,19 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     useFFT = true;
     g = 9.8f;
     PI = 3.1415926f;
-    L = 30;
-    unitWidth = 1.0f;
+    L = N / 8;
+    unitWidth = 5.0f;
     choppy = 0.0f;
     vertexCount = normalCount = 3 * N * N;
     indexCount  = 6 * N * N;
     vertices = new float[vertexCount];
     normals  = new float[normalCount];
     indices  = new unsigned int[indexCount];
-    hBuffer = new std::complex<float>[N * N];
-    kBuffer = new glm::vec2[N * N];
+    hBuffer            = new std::complex<float>[N * N];
+    kBuffer            = new glm::vec2[N * N];
+    epsilonBufferx     = new std::complex<float>[N * N];
+    epsilonBuffery     = new std::complex<float>[N * N];
+    displacementBuffer = new glm::vec2[N * N];
     // Precompute indices
     for (unsigned int i = 0; i < N - 1; ++i) {
         for (unsigned int j = 0; j < N - 1; ++j) {
@@ -97,6 +100,9 @@ Ocean::~Ocean()
     delete[] indices;
     delete[] hBuffer;
     delete[] kBuffer;
+    delete[] epsilonBufferx;
+    delete[] epsilonBuffery;
+    delete[] displacementBuffer;
 }
 
 void Ocean::generateWave(float time)
@@ -106,24 +112,41 @@ void Ocean::generateWave(float time)
     using namespace std;
     // Compute h buffer
     for (int n = -N / 2; n < N / 2; ++n) {
-        for (int m = -N < 2; m < N / 2; ++m) {
+        for (int m = -N / 2; m < N / 2; ++m) {
             glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
             int bufferIndex = (n + N/2) * N + m + N/2;
             kBuffer[bufferIndex] = k;
             hBuffer[bufferIndex] = h(k, time);
+
+            epsilonBufferx[bufferIndex] = hBuffer[bufferIndex] * complex<float>(0.0f, kBuffer[bufferIndex].x);
+            epsilonBuffery[bufferIndex] = hBuffer[bufferIndex] * complex<float>(0.0f, kBuffer[bufferIndex].y);
         }
     }
+
     // Set Wave vertices and normals seperately
     if (useFFT) {
         auto *HBuffer = new std::complex<float>[N * N];
 
         for (int i = 0; i < N; ++i) {
             vector<complex<float>> a(N);
+
+            // Vertex 1D
             for (int j = 0; j < N; ++j)
                 a[j] = hBuffer[i * N + j];
             auto buf = iterativeFFT(a);
             for (int j = 0; j < N; ++j)
                 HBuffer[i * N + j] = buf[j];
+
+            vector<complex<float>> b(N), c(N);
+            for (int j = 0; j < N; ++j) {
+                b[j] = epsilonBufferx[i * N + j];
+                c[j] = epsilonBuffery[i * N + j];
+            }
+            auto buf2 = iterativeFFT(b), buf3 = iterativeFFT(c);
+            for (int j = 0; j < N; ++j) {
+                epsilonBufferx[i * N + j] = buf2[j];
+                epsilonBuffery[i * N + j] = buf3[j];
+            }
         }
 
         for (int i = 0; i < N; ++i) {
@@ -137,6 +160,22 @@ void Ocean::generateWave(float time)
                 else
                     HBuffer[j * N + i] = -buf[j];
             }
+
+            vector<complex<float>> b(N), c(N);
+            for (int j = 0; j < N; ++j) {
+                b[j] = epsilonBufferx[j * N + i];
+                c[j] = epsilonBuffery[j * N + i];
+            }
+            auto buf2 = iterativeFFT(b), buf3 = iterativeFFT(c);
+            for (int j = 0; j < N; ++j) {
+                if ((i + j) % 2 == 0) {
+                    epsilonBufferx[j * N + i] = buf2[j];
+                    epsilonBuffery[j * N + i] = buf3[j];
+                } else {
+                    epsilonBufferx[j * N + i] = -buf2[j];
+                    epsilonBuffery[j * N + i] = -buf3[j];
+                }
+            }
         }
 
         for (int i = 0; i < N; ++i) {
@@ -148,9 +187,9 @@ void Ocean::generateWave(float time)
                 vertices[pos + 1] = HBuffer[i * N + j].real();
                 vertices[pos + 2] = z;
 
-                normals[pos + 0] = 0;
+                normals[pos + 0] = -epsilonBufferx[i * N + j].real();
                 normals[pos + 1] = 1;
-                normals[pos + 2] = 0;
+                normals[pos + 2] = -epsilonBuffery[i * N + j].real();
             }
         }
         delete[] HBuffer;
@@ -186,7 +225,7 @@ float Ocean::H(float x, float z, float t)
     using std::complex;
     complex<float> result(0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
-        for (int m = -N < 2; m < N / 2; ++m) {
+        for (int m = -N / 2; m < N / 2; ++m) {
             int bufferIndex = (n + N/2) * N + m + N/2;
             glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(k, glm::vec2(x, z));
@@ -221,12 +260,12 @@ float Ocean::normalRandom()
     static auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     static std::default_random_engine generator((unsigned)seed);
     static std::normal_distribution<float> dist(0.5, 0.1);
-    return glm::clamp(dist(generator), 0.0f, 1.0f);
+    return dist(generator);
 }
 
 float Ocean::Ph(glm::vec2 k)
 {
-    if (glm::length(k) < 0.01f) return 0.0f;
+    if (glm::length(k) < 0.001f) return 0.0f;
     float absk = glm::length(k);
     float L = glm::length(w)*glm::length(w) / g;
     float result = A;
@@ -246,7 +285,7 @@ glm::vec3 Ocean::epsilon(float x, float z, float t)
     using std::complex;
     glm::vec3 result(0.0f, 0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
-        for (int m = -N < 2; m < N / 2; ++m) {
+        for (int m = -N / 2; m < N / 2; ++m) {
             int bufferIndex = (n + N/2) * N + m + N/2;
             glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(glm::vec2(x, z), k);
@@ -267,7 +306,7 @@ glm::vec3 Ocean::D(float x, float z, float t)
     using std::complex;
     glm::vec3 result(0.0f, 0.0f, 0.0f);
     for (int n = -N / 2; n < N / 2; ++n) {
-        for (int m = -N < 2; m < N / 2; ++m) {
+        for (int m = -N / 2; m < N / 2; ++m) {
             int bufferIndex = (n + N/2) * N + m + N/2;
             glm::vec2 k = kBuffer[bufferIndex];
             float k_dot_x = glm::dot(glm::vec2(x, z), k);

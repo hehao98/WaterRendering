@@ -49,9 +49,12 @@ private:
     float A;
     // Wind direction and speed in one vector
     glm::vec2 w;
-    // the buffer to store computed h and k results
+    // the buffer to store computed results
     std::complex<float> *hBuffer;
     glm::vec2 *kBuffer;
+    std::complex<float> *epsilonBufferx;
+    std::complex<float> *epsilonBuffery;
+    glm::vec2 *displacementBuffer;
 
     // Returns height
     float H(float x, float z, float t);
