@@ -18,10 +18,6 @@
   <component name="ChangeListManager">
     <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/doc1.md" afterPath="$PROJECT_DIR$/doc/doc1.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.cpp" afterPath="$PROJECT_DIR$/src/Ocean.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.h" afterPath="$PROJECT_DIR$/src/Ocean.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Water2.cpp" afterPath="$PROJECT_DIR$/src/Water2.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +44,7 @@
       <file leaf-file-name="Water2.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
+            <state relative-caret-position="3492">
               <caret line="281" column="37" lean-forward="false" selection-start-line="281" selection-start-column="37" selection-end-line="281" selection-end-column="37" />
               <folding>
                 <element signature="e#465#484#0" expanded="true" />
@@ -329,7 +325,7 @@
       <workItem from="1521017063020" duration="13549000" />
       <workItem from="1521037617394" duration="155000" />
       <workItem from="1521038642235" duration="253000" />
-      <workItem from="1521112124868" duration="8145000" />
+      <workItem from="1521112124868" duration="8478000" />
     </task>
     <task id="LOCAL-00001" summary="Add textured wave support">
       <created>1520150876061</created>
@@ -373,11 +369,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521037707147</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Implemented FFT">
+      <created>1521121722308</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1521121722308</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80737000" />
+    <option name="totallyTimeSpent" value="81070000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -438,7 +441,8 @@
     <MESSAGE value="Added FFT reference implementation" />
     <MESSAGE value="Added some optimization" />
     <MESSAGE value="Implemented prototype FFT" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented prototype FFT" />
+    <MESSAGE value="Implemented FFT" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented FFT" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -779,7 +783,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
+        <state relative-caret-position="3492">
           <caret line="281" column="37" lean-forward="false" selection-start-line="281" selection-start-column="37" selection-end-line="281" selection-end-column="37" />
           <folding>
             <element signature="e#465#484#0" expanded="true" />
