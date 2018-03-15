@@ -11,10 +11,4 @@ Before running any executable, make sure the `shaders/`,  `textures/`, and `font
 
 ## Some Results:
 
-####Gerstner Wave Based Water Surface
-
-![Gerstner Wave](screenshots/GerstnerWave(SimpleShader).gif)
-
-####DFT Implementation of the Statistic Ocean Wave Model
-
-![DFT](screenshots/DFT.gif)
+![FFT](screenshots/FFT.gif)
