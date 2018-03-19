@@ -1,7 +1,7 @@
 # 真实感海洋的绘制（二）：使用快速傅里叶变换加速波形计算
-其实上一篇博文所写的$H(\vec{x},t)$，就是二维傅里叶变换的求和式，之前的暴力计算法属于二维的离散傅里叶变换（DFT），二维的快速傅里叶变换（FFT）可以将复杂度从$O(n^4)$降低到$O(n^2\log{n})$。
+其实上一篇博文所写的$H(\vec{x},t)​$，就是二维傅里叶变换的求和式，之前的暴力计算法属于二维的离散傅里叶变换（Discrete Fourier Transform, DFT），利用二维的快速傅里叶变换（Fast Fourier Transform, FFT）可以将复杂度从$O(n^4)​$降低到$O(n^2\log{n})​$。
 
-如果读者不熟悉FFT，强烈建议阅读《算法导论》相关章节，个人感觉没有什么资料讲得比《算法导论》更清楚了。书后习题还有关于二维FFT的结论，是本文算法正确性的理论基础。
+如果读者不熟悉FFT，强烈建议阅读《算法导论》相关章节，个人感觉没有什么资料讲得比《算法导论》更清楚了。书后习题还有关于二维FFT的思考，是本文算法正确性的理论基础。
 
 ## 数学推导
 
@@ -76,8 +76,15 @@ $$
 D_x(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}-i\frac{k_x}{|\vec{k}|}h(\vec{k},t)e^{2\pi m'zi/N} \\
 D_z(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}-i\frac{k_z}{|\vec{k}|}h(\vec{k},t)e^{2\pi m'zi/N}
 $$
-这就完成了推导的工作。
+这就完成了推导的工作。相信熟悉FFT的读者可以对上边的公式很容易给出一个自己的FFT计算实现。
 
 ## 实现结果
 
+![FFT](https://images2018.cnblogs.com/blog/1322089/201803/1322089-20180319192142940-2103236491.gif)
+
+之后的博客将会研究如何对这样的海面进行真实感渲染和光照计算。如果有时间的话，可能会探索如何把这个FFT模型移植到GPU上并行计算以实现更好的性能。
+
 ## 参考文献
+
+1. Tessendorf, Jerry. Simulating Ocean Water. *In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques)*, ACM Press.
+2. Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein. *Introduction to Algorithms, 3rd Edition*, MIT Press.

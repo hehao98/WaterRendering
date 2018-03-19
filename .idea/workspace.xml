@@ -16,14 +16,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/doc1.md" afterPath="$PROJECT_DIR$/doc/doc1.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/doc2.md" afterPath="$PROJECT_DIR$/doc/doc2.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.cpp" afterPath="$PROJECT_DIR$/src/Ocean.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.h" afterPath="$PROJECT_DIR$/src/Ocean.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Water2.cpp" afterPath="$PROJECT_DIR$/src/Water2.cpp" />
-    </list>
+    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -326,7 +319,7 @@
       <workItem from="1521124085259" duration="712000" />
       <workItem from="1521124815102" duration="95000" />
       <workItem from="1521124975997" duration="148000" />
-      <workItem from="1521455759936" duration="1757000" />
+      <workItem from="1521455759936" duration="1812000" />
     </task>
     <task id="LOCAL-00001" summary="Add textured wave support">
       <created>1520150876061</created>
@@ -395,7 +388,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85149000" />
+    <option name="totallyTimeSpent" value="85204000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
