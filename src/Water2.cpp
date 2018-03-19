@@ -78,6 +78,11 @@ int main()
 
     // Necessary OpenGL Parameters
     glEnable(GL_DEPTH_TEST);
+    // Enable gamma correction
+    glEnable(GL_FRAMEBUFFER_SRGB);
+    // Enable anti-aliasing
+    glEnable(GL_MULTISAMPLE);
+    // Enable blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -204,6 +209,8 @@ GLFWwindow *init()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // Something needed for Mac OS X
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // For anti-aliasing effects
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create a window object
     GLFWwindow *window = glfwCreateWindow(gScreenWidth, gScreenHeight, "Window Title", nullptr, nullptr);
