@@ -5,6 +5,8 @@
 
 ## 数学推导
 
+### 高度场
+
 出于数学上推导的简单和实现上的简单，我们约定$L_x=L_y=N=M=2^k$，把方程重写为如下形式
 $$
 H(\vec x,t) = \sum_{\vec{k}}h(\vec k, t)e^{i\vec{k}\cdot \vec{x}} \mbox{,  where }
@@ -35,13 +37,47 @@ $$
 $$
 H(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}h(\vec{k},t)e^{2\pi m'zi/N}
 $$
-这儿出现了一个$(-1)^{x+z}$，不用担心，在计算完之后再乘即可。
+这样已经成为了可以进行FFT的形式。这儿出现了一个$(-1)^{x+z}$，不用担心，在全部计算完之后带入即可。
 
-我们着重考虑其右半部分，因为只要对$m$求和成功那也能用相同的方法对$n$求和。
+### 法线
 
-我们将其拆分成$m$为奇数的和式和$m$为偶数的和式
+关于法线的计算有一些tricky。我们先写出之前给出的法线公式
 $$
+\epsilon(\vec{x},t)=\nabla H(\vec{x},t)=\sum_{\vec{k}}i\vec{k}h(\vec{k},t)e^{i\vec{k}\cdot \vec{x}}\\
 \begin{align}
-\sum_{m'=0}^{N-1}h(\vec{k},t)e^{2\pi m'zi/N}=\sum_{m'=0}^{N/2-1}h(\vec{k},t)e^{2\pi zi(2m')/N}+e^{2\pi zi/N}\sum_{m'=0}^{N/2-1}h(\vec{k}, t)e^{2\pi zi(2m'+1)/N}
+\vec{N}(\vec{x},t)&=(0,1,0)-(\epsilon_x(\vec{x},t),0,\epsilon_z(\vec{x},t))\\
+&=(-\epsilon_x(\vec{x},t),1,-\epsilon_z(\vec{x},t))
 \end{align}
 $$
+问题在于计算$\epsilon(\vec{x},t) = (\epsilon_x, \epsilon_z)$。我们首先类似$H$的推导得到
+$$
+\epsilon(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}i\vec{k}h(\vec{k},t)e^{2\pi m'zi/N}
+$$
+经过观察我们发现$\epsilon(\vec{x},t)$的两个方向分别只与$\vec{k}$的两个方向有关，那么可以写成如下形式
+$$
+\epsilon_x(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}ik_xh(\vec{k},t)e^{2\pi m'zi/N}\\
+\epsilon_z(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}ik_zh(\vec{k},t)e^{2\pi m'zi/N}\\
+$$
+然后分别计算即可。
+
+### 偏置量
+
+类似地，我们写出偏置量的公式
+$$
+\vec{D}(\vec{x},t)=\sum_{\vec{k}}-i\frac{\vec{k}}{|\vec{k}|}
+h(\vec{k},t)e^{i\vec{k}\cdot \vec{x}}
+$$
+和法线计算的方式完全一样得到
+$$
+\vec{D}(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}-i\frac{\vec{k}}{|\vec{k}|}h(\vec{k},t)e^{2\pi m'zi/N}
+$$
+分成两个方向
+$$
+D_x(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}-i\frac{k_x}{|\vec{k}|}h(\vec{k},t)e^{2\pi m'zi/N} \\
+D_z(\vec{x},t)=(-1)^{x+z}\sum_{n'=0}^{N-1}e^{2\pi n'xi/N}\sum_{m'=0}^{N-1}-i\frac{k_z}{|\vec{k}|}h(\vec{k},t)e^{2\pi m'zi/N}
+$$
+这就完成了推导的工作。
+
+## 实现结果
+
+## 参考文献

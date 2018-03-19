@@ -83,7 +83,7 @@ int main()
 
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
 
-    Ocean ocean(glm::vec2(2.0f, 2.0f), 64, 0.1f);
+    Ocean ocean(glm::vec2(2.0f, 2.0f), 128, 0.02f);
     ocean.generateWave((float)glfwGetTime());
     // Pass the vertex data to GPU
     unsigned int VBO, VBO2, EBO, VAO;

@@ -54,7 +54,8 @@ private:
     glm::vec2 *kBuffer;
     std::complex<float> *epsilonBufferx;
     std::complex<float> *epsilonBuffery;
-    glm::vec2 *displacementBuffer;
+    std::complex<float> *displacementBufferx;
+    std::complex<float> *displacementBuffery;
 
     // Returns height
     float H(float x, float z, float t);

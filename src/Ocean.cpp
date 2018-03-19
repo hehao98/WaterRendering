@@ -13,35 +13,46 @@ static const float PI = 3.1415926f;
 static void bitReverseCopy(const std::vector<std::complex<float>> &a,
                            std::vector<std::complex<float>> &A)
 {
-    auto n = (int)A.size();
-    for (int i = 0; i < n; ++i) {
-        // 0b001 -> 0b100
-        int revi = i;
-        int len = 1;
-        for (int j = 0; j < 32; ++j) {
-            if ((1 << j) == n) {
-                len = j;
-                break;
+    static int n = -1;
+    static int *rev = nullptr;
+    // Initialize rev[n] so that there is no need to recompute it later
+    if (n != (int)A.size()) {
+        n = (int)A.size();
+        delete[] rev;
+        rev = new int[n];
+
+        for (int i = 0; i < n; ++i) {
+            // 0b001 -> 0b100
+            int revi = i;
+            int len = 1;
+            for (int j = 0; j < 32; ++j) {
+                if ((1 << j) == n) {
+                    len = j;
+                    break;
+                }
             }
+            for (int j = 0; j < len / 2; ++j) {
+                int tmp1 = (revi >> j) & 0x1;
+                int tmp2 = (revi >> (len - 1 - j)) & 0x1;
+                revi = revi & ~(1 << j);
+                revi = revi | (tmp2 << j);
+                revi = revi & ~(1 << (len - 1 - j));
+                revi = revi | (tmp1 << (len - 1 - j));
+            }
+            rev[i] = revi;
         }
-        for (int j = 0; j < len/2; ++j) {
-            int tmp1 = (revi >> j) & 0x1;
-            int tmp2 = (revi >> (len - 1 - j)) & 0x1;
-            revi = revi & ~(1 << j);
-            revi = revi | (tmp2 << j);
-            revi = revi & ~(1 << (len - 1 - j));
-            revi = revi | (tmp1 << (len - 1 - j));
-        }
-        //cout << i << " " << revi << endl;
-        A[revi] = a[i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        A[rev[i]] = a[i];
     }
 }
 
-static std::vector<std::complex<float>> iterativeFFT(const std::vector<std::complex<float>> &a)
+void iterativeFFT(const std::vector<std::complex<float>> &a,
+                  std::vector<std::complex<float>> &A)
 {
     using namespace std;
     auto n = a.size();
-    vector<complex<float>> A(n);
     bitReverseCopy(a, A);
     for (int s = 1; (1 << s) <= n; ++s) {
         auto m = (1 << s);
@@ -57,7 +68,6 @@ static std::vector<std::complex<float>> iterativeFFT(const std::vector<std::comp
             }
         }
     }
-    return A;
 }
 
 
@@ -67,8 +77,8 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     useFFT = true;
     g = 9.8f;
     PI = 3.1415926f;
-    L = N / 8;
-    unitWidth = 5.0f;
+    L =  N / 8;
+    unitWidth = 3.0f;
     choppy = 0.0f;
     vertexCount = normalCount = 3 * N * N;
     indexCount  = 6 * N * N;
@@ -79,7 +89,8 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     kBuffer            = new glm::vec2[N * N];
     epsilonBufferx     = new std::complex<float>[N * N];
     epsilonBuffery     = new std::complex<float>[N * N];
-    displacementBuffer = new glm::vec2[N * N];
+    displacementBufferx = new std::complex<float>[N * N];
+    displacementBuffery = new std::complex<float>[N * N];
     // Precompute indices
     for (unsigned int i = 0; i < N - 1; ++i) {
         for (unsigned int j = 0; j < N - 1; ++j) {
@@ -89,6 +100,15 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
             indices[6 * (i * N + j) + 3] = (i * N + j + 1);
             indices[6 * (i * N + j) + 4] = ((i + 1) * N + j);
             indices[6 * (i * N + j) + 5] = ((i + 1) * N + j + 1);
+        }
+    }
+    // Compute k buffer
+    for (int n = -N / 2; n < N / 2; ++n) {
+        float kx = 2.0f * PI * n / L;
+        for (int m = -N / 2; m < N / 2; ++m) {
+            glm::vec2 k = glm::vec2(kx, 2.0f * PI * m / L);
+            int bufferIndex = (n + N/2) * N + m + N/2;
+            kBuffer[bufferIndex] = k;
         }
     }
 }
@@ -102,7 +122,8 @@ Ocean::~Ocean()
     delete[] kBuffer;
     delete[] epsilonBufferx;
     delete[] epsilonBuffery;
-    delete[] displacementBuffer;
+    delete[] displacementBufferx;
+    delete[] displacementBuffery;
 }
 
 void Ocean::generateWave(float time)
@@ -110,16 +131,24 @@ void Ocean::generateWave(float time)
     // Eliminate inital status when time accumulate from 0
     time += 10000;
     using namespace std;
-    // Compute h buffer
+    // Compute buffers
     for (int n = -N / 2; n < N / 2; ++n) {
         for (int m = -N / 2; m < N / 2; ++m) {
-            glm::vec2 k = glm::vec2(2.0f * PI * n / L, 2.0f * PI * m / L);
             int bufferIndex = (n + N/2) * N + m + N/2;
-            kBuffer[bufferIndex] = k;
-            hBuffer[bufferIndex] = h(k, time);
+            hBuffer[bufferIndex] = h(kBuffer[bufferIndex], time);
 
             epsilonBufferx[bufferIndex] = hBuffer[bufferIndex] * complex<float>(0.0f, kBuffer[bufferIndex].x);
             epsilonBuffery[bufferIndex] = hBuffer[bufferIndex] * complex<float>(0.0f, kBuffer[bufferIndex].y);
+
+            auto currk = kBuffer[bufferIndex];
+            float klength = sqrt(currk.x*currk.x+currk.y*currk.y);
+            if (klength < 0.00001) {
+                displacementBufferx[bufferIndex] = 0;
+                displacementBuffery[bufferIndex] = 0;
+            } else {
+                displacementBufferx[bufferIndex] = -(epsilonBufferx[bufferIndex] / klength);
+                displacementBuffery[bufferIndex] = -(epsilonBuffery[bufferIndex] / klength);
+            }
         }
     }
 
@@ -127,33 +156,49 @@ void Ocean::generateWave(float time)
     if (useFFT) {
         auto *HBuffer = new std::complex<float>[N * N];
 
+        // First round of FFT on rows
         for (int i = 0; i < N; ++i) {
-            vector<complex<float>> a(N);
+            vector<complex<float>> a(N), buf(N);
 
-            // Vertex 1D
             for (int j = 0; j < N; ++j)
                 a[j] = hBuffer[i * N + j];
-            auto buf = iterativeFFT(a);
+            iterativeFFT(a, buf);
             for (int j = 0; j < N; ++j)
                 HBuffer[i * N + j] = buf[j];
 
-            vector<complex<float>> b(N), c(N);
+            vector<complex<float>> b(N), c(N), buf2(N), buf3(N);
             for (int j = 0; j < N; ++j) {
                 b[j] = epsilonBufferx[i * N + j];
                 c[j] = epsilonBuffery[i * N + j];
             }
-            auto buf2 = iterativeFFT(b), buf3 = iterativeFFT(c);
+            iterativeFFT(b, buf2);
+            iterativeFFT(c, buf3);
             for (int j = 0; j < N; ++j) {
                 epsilonBufferx[i * N + j] = buf2[j];
                 epsilonBuffery[i * N + j] = buf3[j];
             }
+
+            for (int j = 0; j < N; ++j) {
+                buf2[j] = buf3[j] = 0;
+            }
+            for (int j = 0; j < N; ++j) {
+                b[j] = displacementBufferx[i * N + j];
+                c[j] = displacementBuffery[i * N + j];
+            }
+            iterativeFFT(b, buf2);
+            iterativeFFT(c, buf3);
+            for (int j = 0; j < N; ++j) {
+                displacementBufferx[i * N + j] = buf2[j];
+                displacementBuffery[i * N + j] = buf3[j];
+            }
         }
 
+        // Second round of FFT on columns
         for (int i = 0; i < N; ++i) {
-            vector<complex<float>> a(N);
+            vector<complex<float>> a(N), buf(N);
             for (int j = 0; j < N; ++j)
                 a[j] = HBuffer[j * N + i];
-            auto buf = iterativeFFT(a);
+            iterativeFFT(a, buf);
             for (int j = 0; j < N; ++j) {
                 if ((i + j) % 2 == 0)
                     HBuffer[j * N + i] = buf[j];
@@ -161,12 +206,13 @@ void Ocean::generateWave(float time)
                     HBuffer[j * N + i] = -buf[j];
             }
 
-            vector<complex<float>> b(N), c(N);
+            vector<complex<float>> b(N), c(N), buf2(N), buf3(N);
             for (int j = 0; j < N; ++j) {
                 b[j] = epsilonBufferx[j * N + i];
                 c[j] = epsilonBuffery[j * N + i];
             }
-            auto buf2 = iterativeFFT(b), buf3 = iterativeFFT(c);
+            iterativeFFT(b, buf2);
+            iterativeFFT(c, buf3);
             for (int j = 0; j < N; ++j) {
                 if ((i + j) % 2 == 0) {
                     epsilonBufferx[j * N + i] = buf2[j];
@@ -176,6 +222,25 @@ void Ocean::generateWave(float time)
                     epsilonBuffery[j * N + i] = -buf3[j];
                 }
             }
+
+            for (int j = 0; j < N; ++j) {
+                buf2[j] = buf3[j] = 0;
+            }
+            for (int j = 0; j < N; ++j) {
+                b[j] = displacementBufferx[j * N + i];
+                c[j] = displacementBuffery[j * N + i];
+            }
+            iterativeFFT(b, buf2);
+            iterativeFFT(c, buf3);
+            for (int j = 0; j < N; ++j) {
+                if ((i + j) % 2 == 0) {
+                    displacementBufferx[j * N + i] = buf2[j];
+                    displacementBuffery[j * N + i] = buf3[j];
+                } else {
+                    displacementBufferx[j * N + i] = -buf2[j];
+                    displacementBuffery[j * N + i] = -buf3[j];
+                }
+            }
         }
 
         for (int i = 0; i < N; ++i) {
@@ -183,9 +248,9 @@ void Ocean::generateWave(float time)
                 int pos = 3 * (i * N + j);
                 float x = unitWidth * L * (i - N / 2.0f) / N,
                       z = unitWidth * L * (j - N / 2.0f) / N;
-                vertices[pos + 0] = x;
+                vertices[pos + 0] = x - displacementBufferx[i * N + j].real();
                 vertices[pos + 1] = HBuffer[i * N + j].real();
-                vertices[pos + 2] = z;
+                vertices[pos + 2] = z - displacementBuffery[i * N + j].real();
 
                 normals[pos + 0] = -epsilonBufferx[i * N + j].real();
                 normals[pos + 1] = 1;
@@ -193,7 +258,7 @@ void Ocean::generateWave(float time)
             }
         }
         delete[] HBuffer;
-    } else {
+    } else { // Deprecated DFT method, extremely slow
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 int pos = 3 * (i * N + j);
