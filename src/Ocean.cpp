@@ -75,9 +75,9 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
         : w(wind), N(resolution), A(amplitude)
 {
     useFFT = true;
-    g = 9.8f;
+    g  = 9.8f;
     PI = 3.1415926f;
-    L =  N / 8;
+    L  =  N / 8;
     unitWidth = 3.0f;
     choppy = 0.0f;
     vertexCount = normalCount = 3 * N * N;
@@ -91,6 +91,8 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     epsilonBuffery     = new std::complex<float>[N * N];
     displacementBufferx = new std::complex<float>[N * N];
     displacementBuffery = new std::complex<float>[N * N];
+
+    heightMapBuffer = new float[3 * N * N];
     // Precompute indices
     for (unsigned int i = 0; i < N - 1; ++i) {
         for (unsigned int j = 0; j < N - 1; ++j) {
@@ -124,6 +126,7 @@ Ocean::~Ocean()
     delete[] epsilonBuffery;
     delete[] displacementBufferx;
     delete[] displacementBuffery;
+    delete[] heightMapBuffer;
 }
 
 void Ocean::generateWave(float time)

@@ -15,7 +15,9 @@
 
 #include <complex>
 
-
+/**
+ * The class that describe an Ocean
+ */
 class Ocean
 {
 public:
@@ -25,7 +27,9 @@ public:
     // Given current time, generate wave
     void generateWave(float time);
 
-    // The 3*N*N array to store final vertices position
+    // The texture used to store selected heights
+    unsigned int heightMap;
+    // The 3*N*N array to store final vertices position and indice information
     int vertexCount;
     float *vertices;
     int indexCount;
@@ -56,6 +60,8 @@ private:
     std::complex<float> *epsilonBuffery;
     std::complex<float> *displacementBufferx;
     std::complex<float> *displacementBuffery;
+
+    float *heightMapBuffer;
 
     // Returns height
     float H(float x, float z, float t);
