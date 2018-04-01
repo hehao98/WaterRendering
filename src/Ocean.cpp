@@ -74,26 +74,12 @@ void iterativeFFT(const std::vector<std::complex<float>> &a,
 Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
         : w(wind), N(resolution), A(amplitude)
 {
-    useFFT = true;
-    g  = 9.8f;
-    PI = 3.1415926f;
-    L  =  N / 8;
-    unitWidth = 3.0f;
-    choppy = 0.0f;
-    vertexCount = normalCount = 3 * N * N;
+    // Precompute indices and vertices
+    N *= 4;
+    vertexCount = 3 * N * N;
     indexCount  = 6 * N * N;
     vertices = new float[vertexCount];
-    normals  = new float[normalCount];
     indices  = new unsigned int[indexCount];
-    hBuffer            = new std::complex<float>[N * N];
-    kBuffer            = new glm::vec2[N * N];
-    epsilonBufferx     = new std::complex<float>[N * N];
-    epsilonBuffery     = new std::complex<float>[N * N];
-    displacementBufferx = new std::complex<float>[N * N];
-    displacementBuffery = new std::complex<float>[N * N];
-
-    heightMapBuffer = new float[3 * N * N];
-    // Precompute indices
     for (unsigned int i = 0; i < N - 1; ++i) {
         for (unsigned int j = 0; j < N - 1; ++j) {
             indices[6 * (i * N + j)    ] = (i * N + j);
@@ -104,6 +90,31 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
             indices[6 * (i * N + j) + 5] = ((i + 1) * N + j + 1);
         }
     }
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            int pos = 3 * (i * N + j);
+            vertices[pos + 0] = i - N / 2;
+            vertices[pos + 1] = 0;
+            vertices[pos + 2] = j - N / 2;
+        }
+    }
+    N /= 4;
+    // Initialize ocean wave related data
+    g  = 9.8f;
+    PI = 3.1415926f;
+    L  =  N / 8;
+    unitWidth = 3.0f;
+    choppy = 0.0f;
+    hBuffer            = new std::complex<float>[N * N];
+    kBuffer            = new glm::vec2[N * N];
+    epsilonBufferx     = new std::complex<float>[N * N];
+    epsilonBuffery     = new std::complex<float>[N * N];
+    displacementBufferx = new std::complex<float>[N * N];
+    displacementBuffery = new std::complex<float>[N * N];
+
+    heightMapBuffer = new float[3 * N * N];
+    normalMapBuffer = new float[3 * N * N];
+
     // Compute k buffer
     for (int n = -N / 2; n < N / 2; ++n) {
         float kx = 2.0f * PI * n / L;
@@ -113,12 +124,28 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
             kBuffer[bufferIndex] = k;
         }
     }
+
+    // Setup height map and normal map
+    glGenTextures(1, &heightMap);
+    glBindTexture(GL_TEXTURE_2D, heightMap);
+    // Set default texture wrapping/filtering options
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // Setup height map and normal map
+    glGenTextures(1, &normalMap);
+    glBindTexture(GL_TEXTURE_2D, normalMap);
+    // Set default texture wrapping/filtering options
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 Ocean::~Ocean()
 {
     delete[] vertices;
-    delete[] normals;
     delete[] indices;
     delete[] hBuffer;
     delete[] kBuffer;
@@ -127,12 +154,14 @@ Ocean::~Ocean()
     delete[] displacementBufferx;
     delete[] displacementBuffery;
     delete[] heightMapBuffer;
+    delete[] normalMapBuffer;
 }
 
 void Ocean::generateWave(float time)
 {
     // Eliminate inital status when time accumulate from 0
     time += 10000;
+    time /= 2;
     using namespace std;
     // Compute buffers
     for (int n = -N / 2; n < N / 2; ++n) {
@@ -156,7 +185,6 @@ void Ocean::generateWave(float time)
     }
 
     // Set Wave vertices and normals seperately
-    if (useFFT) {
         auto *HBuffer = new std::complex<float>[N * N];
 
         // First round of FFT on rows
@@ -248,44 +276,39 @@ void Ocean::generateWave(float time)
 
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
+                int index = i * N + j;
                 int pos = 3 * (i * N + j);
-                float x = unitWidth * L * (i - N / 2.0f) / N,
-                      z = unitWidth * L * (j - N / 2.0f) / N;
-                vertices[pos + 0] = x - displacementBufferx[i * N + j].real();
-                vertices[pos + 1] = HBuffer[i * N + j].real();
-                vertices[pos + 2] = z - displacementBuffery[i * N + j].real();
 
-                normals[pos + 0] = -epsilonBufferx[i * N + j].real();
-                normals[pos + 1] = 1;
-                normals[pos + 2] = -epsilonBuffery[i * N + j].real();
+                glm::vec3 heightVector = glm::vec3(-displacementBufferx[index].real(),
+                                                    HBuffer[i * N + j].real(),
+                                                   -displacementBuffery[index].real());
+                //std::cout << heightVector.x << " " << heightVector.y << " " << heightVector.z << std::endl;
+                heightVector = heightVector / 2.0f + glm::vec3(0.5f);
+                heightMapBuffer[pos + 0] = heightVector.x;
+                heightMapBuffer[pos + 1] = heightVector.y;
+                heightMapBuffer[pos + 2] = heightVector.z;
+
+                glm::vec3 normal = glm::vec3(-epsilonBufferx[index].real(),
+                                              1.0f,
+                                             -epsilonBuffery[index].real());
+                normal = glm::normalize(normal) / 2.0f + glm::vec3(0.5f);
+                //std::cout << normal.x << " " << normal.y << " " << normal.z << std::endl;
+                normalMapBuffer[pos + 0] = normal.x;
+                normalMapBuffer[pos + 1] = normal.y;
+                normalMapBuffer[pos + 2] = normal.z;
+
             }
         }
         delete[] HBuffer;
-    } else { // Deprecated DFT method, extremely slow
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                int pos = 3 * (i * N + j);
 
-                float x = unitWidth * L * (i - N / 2.0f) / N,
-                      z = unitWidth * L * (j - N / 2.0f) / N;
-
-                // Displacement vector
-                //glm::vec3 d = glm::vec3(0.0f,0.0f,0.0f);
-                glm::vec3 d = choppy * D(x, z, time);
-
-                vertices[pos + 0] = x + d.x;
-                vertices[pos + 1] = H(x, z, time) + d.y;
-                vertices[pos + 2] = z + d.z;
-
-                // Epsilon vector for calculating normals
-                glm::vec3 e = epsilon(x, z, time);
-
-                normals[pos + 0] = -e.x;
-                normals[pos + 1] = 1;
-                normals[pos + 2] = -e.z;
-            }
-        }
-    }
+        // Setup height map and normal map
+        glBindTexture(GL_TEXTURE_2D, heightMap);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, N, N,
+                     0, GL_RGB, GL_FLOAT, heightMapBuffer);
+        // Setup height map and normal map
+        glBindTexture(GL_TEXTURE_2D, normalMap);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, N, N,
+                     0, GL_RGB, GL_FLOAT, normalMapBuffer);
 }
 
 float Ocean::H(float x, float z, float t)

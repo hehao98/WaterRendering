@@ -15,7 +15,9 @@
 
 #include <complex>
 
-/**
+#include <glad/glad.h>
+
+/*
  * The class that describe an Ocean
  */
 class Ocean
@@ -28,15 +30,12 @@ public:
     void generateWave(float time);
 
     // The texture used to store selected heights
-    unsigned int heightMap;
+    unsigned int heightMap, normalMap;
     // The 3*N*N array to store final vertices position and indice information
     int vertexCount;
     float *vertices;
     int indexCount;
     unsigned int *indices;
-    // The 3*N*N array to store normal vector results
-    int normalCount;
-    float *normals;
     // The flag to control generating method
     bool useFFT;
 private:
@@ -62,6 +61,7 @@ private:
     std::complex<float> *displacementBuffery;
 
     float *heightMapBuffer;
+    float *normalMapBuffer;
 
     // Returns height
     float H(float x, float z, float t);

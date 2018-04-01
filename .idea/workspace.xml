@@ -16,10 +16,51 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="">
+    <list default="true" id="92cecab2-1d50-487e-bef5-00f680de6af6" name="Default" comment="Moved to a texture based implementation">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/CloudyLightRays/CloudyLightRaysUp2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/DarkStormy/DarkStormyUp2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/FullMoon/FullMoonUp2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/SunSet/SunSetUp2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/ThickCloudsWater/ThickCloudsWaterUp2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayBack2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayDown2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayFront2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayLeft2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayRight2048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/textures/SkyboxSet1/TropicalSunnyDay/TropicalSunnyDayUp2048.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shaders/DrawNormal.geom" afterPath="$PROJECT_DIR$/shaders/DrawNormal.geom" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shaders/DrawNormal.vert" afterPath="$PROJECT_DIR$/shaders/DrawNormal.vert" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.cpp" afterPath="$PROJECT_DIR$/src/Ocean.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ocean.h" afterPath="$PROJECT_DIR$/src/Ocean.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Water2.cpp" afterPath="$PROJECT_DIR$/src/Water2.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,8 +75,8 @@
       <file leaf-file-name="Water2.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+            <state relative-caret-position="208">
+              <caret line="132" column="93" lean-forward="false" selection-start-line="132" selection-start-column="93" selection-end-line="132" selection-end-column="93" />
               <folding>
                 <element signature="e#465#484#0" expanded="true" />
               </folding>
@@ -43,12 +84,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ocean.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Water2.vert" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/shaders/Water2.vert">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="29" lean-forward="false" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Water2.frag" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/shaders/Water2.frag">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="24" lean-forward="false" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ocean.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Ocean.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="931">
-              <caret line="134" column="18" lean-forward="true" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
+            <state relative-caret-position="-357">
+              <caret line="163" column="14" lean-forward="false" selection-start-line="163" selection-start-column="14" selection-end-line="163" selection-end-column="14" />
               <folding>
+                <element signature="e#39#57#0" expanded="true" />
                 <element signature="e#153#1277#0" expanded="false" />
                 <element signature="e#1279#1934#0" expanded="false" />
               </folding>
@@ -56,12 +118,44 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Texture.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/Texture.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DrawNormal.vert" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.vert">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="35" lean-forward="false" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DrawNormal.geom" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.geom">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Ocean.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Ocean.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="121">
+              <caret line="37" column="18" lean-forward="false" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+              <folding>
+                <element signature="e#229#251#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,13 +205,18 @@
         <option value="$PROJECT_DIR$/src/FFTTest.cpp" />
         <option value="$PROJECT_DIR$/build/shaders/WaterWireframe.frag" />
         <option value="$PROJECT_DIR$/build/shaders/DrawNormal.geom.glsl" />
-        <option value="$PROJECT_DIR$/build/shaders/DrawNormal.vert" />
         <option value="$PROJECT_DIR$/build/shaders/DrawNormal.frag" />
-        <option value="$PROJECT_DIR$/build/shaders/DrawNormal.geom" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/Water2.cpp" />
+        <option value="$PROJECT_DIR$/shaders/DrawNormal.vert" />
+        <option value="$PROJECT_DIR$/include/Texture.h" />
+        <option value="$PROJECT_DIR$/build/shaders/DrawNormal.geom" />
+        <option value="$PROJECT_DIR$/build/shaders/DrawNormal.vert" />
+        <option value="$PROJECT_DIR$/src/OceanWave.h" />
         <option value="$PROJECT_DIR$/src/Ocean.h" />
+        <option value="$PROJECT_DIR$/src/Water2.cpp" />
         <option value="$PROJECT_DIR$/src/Ocean.cpp" />
+        <option value="$PROJECT_DIR$/build/shaders/Water2.vert" />
+        <option value="$PROJECT_DIR$/build/shaders/Water2.frag" />
       </list>
     </option>
   </component>
@@ -247,6 +346,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/hehao/Desktop/计算机图形学/OceanSimulator/include/Camera.h" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -328,6 +428,9 @@
       <workItem from="1521465256332" duration="91000" />
       <workItem from="1521611314151" duration="545000" />
       <workItem from="1522062510957" duration="322000" />
+      <workItem from="1522131146469" duration="9305000" />
+      <workItem from="1522141290001" duration="474000" />
+      <workItem from="1522547827022" duration="8646000" />
     </task>
     <task id="LOCAL-00001" summary="Add textured wave support">
       <created>1520150876061</created>
@@ -396,22 +499,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86411000" />
+    <option name="totallyTimeSpent" value="104836000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1898223" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1987076" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -458,57 +561,16 @@
     <MESSAGE value="Added some optimization" />
     <MESSAGE value="Implemented prototype FFT" />
     <MESSAGE value="Implemented FFT" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented FFT" />
+    <MESSAGE value="Moved to a texture based implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved to a texture based implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/shaders/GerstnerWave.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="12" lean-forward="false" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="19" lean-forward="false" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Water1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="140" column="28" lean-forward="false" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/Water.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="1" lean-forward="false" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/SineWave.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="11" lean-forward="true" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="19" lean-forward="false" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Water1.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -546,13 +608,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/shaders/Skybox.vert" />
     <entry file="file://$PROJECT_DIR$/build/shaders/Skybox.frag" />
-    <entry file="file://$PROJECT_DIR$/include/stb_image.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-115441">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/Shader.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -598,13 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Waves.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DFTHeightField.cpp" />
     <entry file="file://$PROJECT_DIR$/src/DFTHeightField.h" />
     <entry file="file://$PROJECT_DIR$/src/Waves.h">
@@ -625,20 +673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/Texture.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Water1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="739">
-          <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -699,45 +733,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.geom.glsl" />
-    <entry file="file://$PROJECT_DIR$/build/shaders/SingleColor.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.frag">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/SingleColor.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/WaterWireframe.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="1" lean-forward="false" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.geom">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -758,32 +757,148 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
+    <entry file="file://$PROJECT_DIR$/build/shaders/WaterWireframe.frag">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <element signature="e#465#484#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="425">
+          <caret line="25" column="1" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Waves.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-993">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Water1.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1289">
+          <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shaders/DrawNormal.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shaders/DrawNormal.geom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shaders/DrawNormal.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="43" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/SingleColor.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/SingleColor.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="18" lean-forward="false" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/stb_image.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1864">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/Camera.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.geom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Ocean.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+        <state relative-caret-position="121">
+          <caret line="37" column="18" lean-forward="false" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+          <folding>
+            <element signature="e#229#251#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/Texture.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/DrawNormal.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="35" lean-forward="false" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Ocean.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
-          <caret line="134" column="18" lean-forward="true" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
+        <state relative-caret-position="-357">
+          <caret line="163" column="14" lean-forward="false" selection-start-line="163" selection-start-column="14" selection-end-line="163" selection-end-column="14" />
           <folding>
+            <element signature="e#39#57#0" expanded="true" />
             <element signature="e#153#1277#0" expanded="false" />
             <element signature="e#1279#1934#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Water2.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="132" column="93" lean-forward="false" selection-start-line="132" selection-start-column="93" selection-end-line="132" selection-end-column="93" />
+          <folding>
+            <element signature="e#465#484#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/Water2.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="29" lean-forward="false" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/shaders/Water2.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="24" lean-forward="false" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>

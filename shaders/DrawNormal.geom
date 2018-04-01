@@ -12,7 +12,7 @@ void generateLine(int i)
 {
     gl_Position = projection * view * (gl_in[i].gl_Position);
     EmitVertex();
-    gl_Position = projection * view * (gl_in[i].gl_Position + 0.5 * vec4(vNormal[i], 0.0));
+    gl_Position = projection * view * (gl_in[i].gl_Position + 0.25 * vec4(vNormal[i], 0.0));
     EmitVertex();
     EndPrimitive();
 }
