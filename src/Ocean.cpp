@@ -75,7 +75,6 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
         : w(wind), N(resolution), A(amplitude)
 {
     // Precompute indices and vertices
-    N *= 4;
     vertexCount = 3 * N * N;
     indexCount  = 6 * N * N;
     vertices = new float[vertexCount];
@@ -93,12 +92,11 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             int pos = 3 * (i * N + j);
-            vertices[pos + 0] = (i - N / 2) * 2;
+            vertices[pos + 0] = (i - N / 2) * 8;
             vertices[pos + 1] = 0;
-            vertices[pos + 2] = (j - N / 2) * 2;
+            vertices[pos + 2] = (j - N / 2) * 8;
         }
     }
-    N /= 4;
     // Initialize ocean wave related data
     g  = 9.8f;
     PI = 3.1415926f;

@@ -92,7 +92,7 @@ int main()
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
     gCamera.MovementSpeed = 5.0f;
 
-    Ocean ocean(glm::vec2(2.0f, 2.0f), 128, 0.02f);
+    Ocean ocean(glm::vec2(2.0f, 2.0f), 256, 0.03f);
     ocean.generateWave((float)glfwGetTime());
     // Pass the vertex data to GPU
     unsigned int VBO, EBO, VAO;
@@ -142,10 +142,10 @@ int main()
         shader.setFloat("time", (float)glfwGetTime());
         // Set fragment shader data
         shader.setVec3("viewPos", gCamera.Position);
-        shader.setVec3("lightDir", glm::vec3(1.0f, 1.0f, 3.0f));
-        shader.setVec3("lightPos", glm::vec3(100.0f, 100.0f, 500.0f));
-        shader.setVec3("diffuse", glm::vec3(0.1f, 0.3f, 0.5f));
-        shader.setVec3("ambient", glm::vec3(0.1f, 0.3f, 0.5f));
+        shader.setVec3("lightDir", glm::vec3(-1.0f, 1.0f, -1.0f));
+        shader.setVec3("lightPos", glm::vec3(-1000.0f, -1000.0f, 5000.0f));
+        shader.setVec3("diffuse", glm::vec3(0.1f, 0.25f, 0.55f));
+        shader.setVec3("ambient", glm::vec3(0.2f, 0.35f, 0.7f));
         shader.setVec3("specular", glm::vec3(1.0f, 1.0f, 1.0f));
         shader.setInt("heightMap", 0);
         shader.setInt("normalMap", 1);
