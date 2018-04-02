@@ -93,9 +93,9 @@ Ocean::Ocean(glm::vec2 wind, int resolution, float amplitude)
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             int pos = 3 * (i * N + j);
-            vertices[pos + 0] = i - N / 2;
+            vertices[pos + 0] = (i - N / 2) * 2;
             vertices[pos + 1] = 0;
-            vertices[pos + 2] = j - N / 2;
+            vertices[pos + 2] = (j - N / 2) * 2;
         }
     }
     N /= 4;

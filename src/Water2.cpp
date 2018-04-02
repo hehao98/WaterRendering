@@ -48,7 +48,7 @@ float gLastFrame = 0.0f;
 // Global vaiables and flags
 Camera gCamera;
 bool gDrawNormals = false;
-bool gPause = false;
+bool gPause = true;
 
 int main()
 {
@@ -142,15 +142,20 @@ int main()
         shader.setFloat("time", (float)glfwGetTime());
         // Set fragment shader data
         shader.setVec3("viewPos", gCamera.Position);
-        shader.setVec3("deepWaterColor", glm::vec3(0.1137f, 0.2745f, 0.4392f));
-        shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
-        shader.setVec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+        shader.setVec3("lightDir", glm::vec3(1.0f, 1.0f, 3.0f));
+        shader.setVec3("lightPos", glm::vec3(100.0f, 100.0f, 500.0f));
+        shader.setVec3("diffuse", glm::vec3(0.1f, 0.3f, 0.5f));
+        shader.setVec3("ambient", glm::vec3(0.1f, 0.3f, 0.5f));
+        shader.setVec3("specular", glm::vec3(1.0f, 1.0f, 1.0f));
         shader.setInt("heightMap", 0);
         shader.setInt("normalMap", 1);
+        shader.setInt("skybox", 2);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, ocean.heightMap);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, ocean.normalMap);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.getCubeMap());
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
 
