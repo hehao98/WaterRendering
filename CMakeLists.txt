@@ -23,10 +23,19 @@ target_link_libraries(Water1 glfw ${OPENGL_gl_LIBRARY})
 add_executable(Water2
         src/Water2.cpp
         src/Skybox.cpp
-        src/Ocean.cpp
+        src/VertexBufferOcean.cpp
         src/TextRenderer.cpp
         src/glad.c)
 target_link_libraries(Water2 glfw ${OPENGL_gl_LIBRARY} ${FREETYPE_LIBRARIES}
+        libbz2.dylib libz.dylib) # Things needed for Freetype on Mac OS X
+
+add_executable(Ocean
+        src/Water3.cpp
+        src/Skybox.cpp
+        src/Ocean.cpp
+        src/TextRenderer.cpp
+        src/glad.c)
+target_link_libraries(Ocean glfw ${OPENGL_gl_LIBRARY} ${FREETYPE_LIBRARIES}
         libbz2.dylib libz.dylib) # Things needed for Freetype on Mac OS X
 
 add_executable(FFTTest src/FFTTest.cpp)

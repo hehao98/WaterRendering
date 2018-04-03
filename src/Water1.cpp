@@ -54,7 +54,7 @@ int main()
     }
 
     // Load water shader
-    Shader shader("shaders/GerstnerWave.vert", "shaders/WaterWireframe.frag");
+    Shader shader("shaders/GerstnerWave.vert", "shaders/Water.frag");
 
     // Initialize skybox
     std::vector<std::string> skyboxPaths = {
@@ -71,6 +71,7 @@ int main()
     // Necessary OpenGL Parameters
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
+    glEnable(GL_FRAMEBUFFER_SRGB);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
@@ -135,7 +136,7 @@ int main()
         glm::mat4 projection = glm::perspective(glm::radians(gCamera.Zoom),
                                                 (float)gScreenWidth / gScreenHeight, 0.1f, 100.0f);
 
-        //skybox.Draw(skyboxShader, view, projection);
+        skybox.Draw(skyboxShader, view, projection);
 
         shader.use();
         // Set vertex shader data
@@ -147,6 +148,7 @@ int main()
         shader.setVec3("viewPos", gCamera.Position);
         shader.setVec3("deepWaterColor", glm::vec3(0.1137f, 0.2745f, 0.4392f));
         shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
+        shader.setVec3("lightDir", glm::vec3(-1.0f, -1.0f, 2.0f));
         shader.setInt("waveMapCount", waveMapCount);
         for (unsigned int i = 0; i < waveMapCount; ++i) {
             glActiveTexture(GL_TEXTURE0 + i);

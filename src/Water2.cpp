@@ -23,7 +23,7 @@
 #include "TextRenderer.h"
 
 // Water related header file
-#include "Ocean.h"
+#include "VertexBufferOcean.h"
 
 // **********GLFW window related functions**********
 // Returns pointer to a initialized window with OpenGL context set up
@@ -35,8 +35,6 @@ void processInput(GLFWwindow *window);
 // Mouse input is handled in this function
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double offsetX, double offsetY);
-// Render xyz coordinate in world space
-void renderCoordinates(const glm::mat4 &view, const glm::mat4 &proj);
 
 
 // **********GLFW window related attributes**********
@@ -48,7 +46,6 @@ float gLastFrame = 0.0f;
 // Global vaiables and flags
 Camera gCamera;
 bool gDrawNormals = false;
-bool gPause = true;
 
 int main()
 {
@@ -59,7 +56,7 @@ int main()
     }
 
     // Load shaders
-    Shader shader("shaders/Water2.vert", "shaders/Water2.frag");
+    Shader shader("shaders/SingleColor.vert", "shaders/Water.frag");
     Shader textShader("shaders/TextShader.vert", "shaders/TextShader.frag");
     Shader normalShader("shaders/DrawNormal.vert", "shaders/DrawNormal.frag",
                         "shaders/DrawNormal.geom");
@@ -76,6 +73,14 @@ int main()
             "textures/TropicalSunnyDay/TropicalSunnyDayFront2048.png",
             "textures/TropicalSunnyDay/TropicalSunnyDayBack2048.png",
     };
+    std::vector<std::string> skyboxPaths2 = {
+            "textures/skybox/right.jpg",
+            "textures/skybox/left.jpg",
+            "textures/skybox/top.jpg",
+            "textures/skybox/bottom.jpg",
+            "textures/skybox/front.jpg",
+            "textures/skybox/back.jpg",
+    };
     Shader skyboxShader("shaders/SkyboxShader.vert", "shaders/SkyboxShader.frag");
     Skybox skybox(skyboxPaths);
 
@@ -90,22 +95,40 @@ int main()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
-    gCamera.MovementSpeed = 5.0f;
 
-    Ocean ocean(glm::vec2(2.0f, 2.0f), 256, 0.03f);
+    VertexBufferOcean ocean(glm::vec2(2.0f, 2.0f), 128, 0.02f);
     ocean.generateWave((float)glfwGetTime());
     // Pass the vertex data to GPU
-    unsigned int VBO, EBO, VAO;
+    unsigned int VBO, VBO2, EBO, VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ocean.vertexCount, ocean.vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ocean.vertexCount, ocean.vertices, GL_DYNAMIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    glGenBuffers(1, &VBO2);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ocean.normalCount, ocean.normals, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * ocean.indexCount, ocean.indices, GL_STATIC_DRAW);
+
+    std::cout << "Total vertices: " << ocean.vertexCount << std::endl;
+    for (int i = 0; i < 50; ++i) {
+        using namespace std;
+        cout << "(" << ocean.vertices[3 * i] << ","
+             << ocean.vertices[3 * i + 1] << ","
+             <<  ocean.vertices[3 * i + 2] << ")";
+        cout << "(" << ocean.indices[3 * i] << ","
+             << ocean.indices[3 * i + 1] << ","
+             <<  ocean.indices[3 * i + 2] << ")";
+        cout << "(" << ocean.normals[3 * i] << ","
+             << ocean.normals[3 * i + 1] << ","
+             << ocean.normals[3 * i + 2] << ")" << endl;
+    }
 
     // Game loop
     while (!glfwWindowShouldClose(window)) {
@@ -119,9 +142,11 @@ int main()
         processInput(window);
 
         // Update wave data
-        if (!gPause) {
-            ocean.generateWave((float) glfwGetTime());
-        }
+        ocean.generateWave((float)glfwGetTime());
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ocean.vertexCount, ocean.vertices, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * ocean.normalCount, ocean.normals, GL_DYNAMIC_DRAW);
 
         // All the rendering starts from here
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -130,7 +155,7 @@ int main()
         // Set up view and projection matrix
         glm::mat4 view = gCamera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(gCamera.Zoom),
-                                                (float)gScreenWidth / gScreenHeight, 0.1f, 1000.0f);
+                                                (float)gScreenWidth / gScreenHeight, 0.1f, 100.0f);
 
         skybox.Draw(skyboxShader, view, projection);
 
@@ -142,19 +167,11 @@ int main()
         shader.setFloat("time", (float)glfwGetTime());
         // Set fragment shader data
         shader.setVec3("viewPos", gCamera.Position);
-        shader.setVec3("lightDir", glm::vec3(-1.0f, 1.0f, -1.0f));
-        shader.setVec3("lightPos", glm::vec3(-1000.0f, -1000.0f, 5000.0f));
-        shader.setVec3("diffuse", glm::vec3(0.1f, 0.25f, 0.55f));
-        shader.setVec3("ambient", glm::vec3(0.2f, 0.35f, 0.7f));
-        shader.setVec3("specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        shader.setInt("heightMap", 0);
-        shader.setInt("normalMap", 1);
-        shader.setInt("skybox", 2);
+        shader.setVec3("deepWaterColor", glm::vec3(0.1f, 0.2f, 0.35f));
+        shader.setVec3("shallowWaterColor", glm::vec3(0.45f, 0.55f, 0.7f));
+        shader.setVec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+        shader.setInt("skybox", 0);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, ocean.heightMap);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, ocean.normalMap);
-        glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.getCubeMap());
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
@@ -165,14 +182,9 @@ int main()
             normalShader.setMat4("view", view);
             normalShader.setMat4("projection", projection);
             normalShader.setMat4("model", glm::mat4(1.0f));
-            normalShader.setInt("heightMap", 0);
-            normalShader.setInt("normalMap", 1);
             glBindVertexArray(VAO);
             glDrawElements(GL_TRIANGLES, ocean.indexCount, GL_UNSIGNED_INT, nullptr);
         }
-
-        // Render XYZ coordinate
-        // renderCoordinates(view, projection);
 
         // Start to render texts
         textRenderer.projection = glm::ortho(0.0f, (float)gScreenWidth,
@@ -288,12 +300,6 @@ void processInput(GLFWwindow *window)
         gDrawNormals = !gDrawNormals;
         lastPressedTime = glfwGetTime();
     }
-
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS
-        && glfwGetTime() - lastPressedTime > 0.2) {
-        gPause = !gPause;
-        lastPressedTime = glfwGetTime();
-    }
 }
 
 void mouseCallback(GLFWwindow *window, double xpos, double ypos)
@@ -321,40 +327,4 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos)
 void scrollCallback(GLFWwindow *window, double offsetX, double offsetY)
 {
     gCamera.ProcessMouseScroll((float)offsetY);
-}
-
-void renderCoordinates(const glm::mat4 &view, const glm::mat4 &proj)
-{
-    static const glm::vec3 x(1.0f, 0.0f, 0.0f);
-    static const glm::vec3 y(0.0f, 1.0f, 0.0f);
-    static const glm::vec3 z(0.0f, 0.0f, 1.0f);
-    static unsigned int VAO = 0, VBO = 0;
-    static Shader shader("shaders/SingleColor.vert", "shaders/SingleColor.frag");
-    static const float vertices[] = {
-            0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-    };
-    if (VAO == 0 || VBO == 0) {
-        glGenBuffers(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-        glEnableVertexAttribArray(1);
-    }
-    shader.use();
-    shader.setMat4("view", view);
-    shader.setMat4("projection", proj);
-    shader.setMat4("model", glm::mat4(1.0f));
-    glBindVertexArray(VAO);
-    shader.setVec4("color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-    glDrawArrays(GL_LINES, 0, 2);
-    shader.setVec4("color", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-    glDrawArrays(GL_LINES, 2, 2);
-    shader.setVec4("color", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-    glDrawArrays(GL_LINES, 4, 2);
 }

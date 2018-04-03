@@ -36,7 +36,7 @@ void setGersterWaveData(Shader &shader, glm::vec2 windDir, int waveCount, Gerstn
     shader.use();
     shader.setInt("waveCount", waveCount);
     for (int i = 0; i < waveCount; ++i) {
-        waves[i].A = randf(0.02f, 0.1f);
+        waves[i].A = randf(0.01f, 0.05f);
         shader.setFloat("waves[" + std::to_string(i) + "].A", waves[i].A);
 
         waves[i].Q = randf(0.3f, 0.4f);

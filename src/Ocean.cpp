@@ -281,11 +281,20 @@ void Ocean::generateWave(float time)
                                                     HBuffer[i * N + j].real(),
                                                    -displacementBuffery[index].real());
                 //std::cout << heightVector.x << " " << heightVector.y << " " << heightVector.z << std::endl;
-                heightVector = heightVector / 2.0f + glm::vec3(0.5f);
+                heightVector = heightVector / 5.0f + glm::vec3(0.5f);
                 heightMapBuffer[pos + 0] = heightVector.x;
                 heightMapBuffer[pos + 1] = heightVector.y;
                 heightMapBuffer[pos + 2] = heightVector.z;
-
+                if (heightVector.x > 1.0 || heightVector.y > 1.0 || heightVector.z > 1.0
+                        || heightVector.x < 0.0 || heightVector.y < 0.0 || heightVector.z < 0.0) {
+                    std::cout << "Warning" << std::endl;
+                }
+                /*
+                float x = vertices[pos + 0], z = vertices[pos + 2];
+                vertices[pos + 0] = x - displacementBufferx[i * N + j].real();
+                vertices[pos + 1] = HBuffer[i * N + j].real();
+                vertices[pos + 2] = z - displacementBuffery[i * N + j].real();
+                */
                 glm::vec3 normal = glm::vec3(-epsilonBufferx[index].real(),
                                               1.0f,
                                              -epsilonBuffery[index].real());
@@ -303,7 +312,6 @@ void Ocean::generateWave(float time)
         glBindTexture(GL_TEXTURE_2D, heightMap);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, N, N,
                      0, GL_RGB, GL_FLOAT, heightMapBuffer);
-        // Setup height map and normal map
         glBindTexture(GL_TEXTURE_2D, normalMap);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, N, N,
                      0, GL_RGB, GL_FLOAT, normalMapBuffer);
