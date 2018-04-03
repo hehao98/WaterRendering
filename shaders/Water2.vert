@@ -16,13 +16,13 @@ out VS_OUT {
 
 void main()
 {
-    vec3 height = (vec3(texture(heightMap, aPos.xz / 100.0f)) - vec3(0.5f)) * 2.0f;
+    vec3 height = (vec3(texture(heightMap, aPos.xz / 32.0f)) - vec3(0.5f)) * 5.0f;
     vec3 pos = aPos + height;
-    vec3 n = (vec3(texture(normalMap, aPos.xz / 100.0f)) - vec3(0.5f)) * 2.0f;
+    vec3 n = (vec3(texture(normalMap, aPos.xz / 32.0f)) - vec3(0.5f)) * 2.0f;
 
     gl_Position = projection * view * model * vec4(pos, 1.0);
 
     vs_out.fragPos = model * vec4(pos, 1.0);
-    vs_out.texCoord = aPos.xz / 100.0f;
+    vs_out.texCoord = aPos.xz / 32.0f;
  	vs_out.normal = mat3(transpose(inverse(model))) * n;
 }

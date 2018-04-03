@@ -25,13 +25,28 @@ void main()
     vec3 n = normalize(2.0f * vec3(texture(normalMap, fs_in.texCoord)) - 1.0f);
     vec3 eyeVec = normalize(viewPos - vec3(fs_in.fragPos));
     vec3 halfwayDir = normalize(lightDir + eyeVec);
+    vec3 reflectVec = 2 * dot(eyeVec, n) * n - eyeVec;
 
-    vec4 c1 = vec4(ambient, 1.0) * texture(skybox, lightPos - fs_in.fragPos.xyz);
-    vec4 c2 = vec4(specular, 1.0) * texture(skybox, lightPos - fs_in.fragPos.xyz);
+    // Incident angle, reflection angle and transmission(refraction) angle
+    float thetaI = acos(dot(eyeVec, n));
+    float thetaR = acos(dot(reflectVec, n));
+    float thetaT = asin(0.75 * sin(thetaI));
+    // The reflectivity factor, 1-reflectivity is the refraction factor
+    float reflectivity;
+    if (abs(thetaI) >= 0.000001) {
+        float t1 = sin(thetaT - thetaI), t2 = sin(thetaT + thetaI);
+        float t3 = tan(thetaT - thetaI), t4 = tan(thetaT + thetaI);
+        reflectivity = clamp(0.5 * (t1*t1/(t2*t2) + t3*t3/(t4*t4)), 0.0, 1.0);
+    } else {
+        reflectivity = 0;
+    }
 
+    // Reflection color component
+    vec4 r = texture(skybox, reflectVec);
 
-    fragColor = vec4(0);
-    fragColor += vec4(diffuse, 1.0);
-    fragColor += c1 * max(dot(normalize(lightDir), n), 0);
-    fragColor += c2 * pow(max(dot(n, halfwayDir), 0.0), 8.0f);
+    // Transmission color component
+    vec4 t = vec4(diffuse, 1.0);
+
+    // Calculate Fresnel Reflection and Refraction
+    fragColor = reflectivity * r + (1 - reflectivity) * t;
 }
