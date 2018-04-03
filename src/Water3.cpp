@@ -210,6 +210,9 @@ int main()
         textRenderer.renderText(textShader, "Use E to decide whether to draw normals",
                                 0.0f, 34.0f, 0.3f,
                                 glm::vec3(0.0, 1.0f, 1.0f));
+        textRenderer.renderText(textShader, "Press P to pause or resume",
+                                0.0f, 50.0f, 0.3f,
+                                glm::vec3(0.0, 1.0f, 1.0f));
         // Rendering Ends here
 
         glfwSwapBuffers(window);

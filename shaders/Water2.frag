@@ -52,6 +52,6 @@ void main()
 
     float dist = length(viewPos - vec3(fs_in.fragPos));
     vec4 fogColor = texture(skybox, vec3(-eyeVec.x, 0.0, -eyeVec.z));
-    float fogFactor = 1 - exp(-0.003 * dist);
+    float fogFactor = 1 - exp(-0.004 * dist);
     fragColor = mix(fragColor, fogColor, fogFactor);
 }
