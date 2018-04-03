@@ -76,8 +76,16 @@ int main()
             "textures/TropicalSunnyDay/TropicalSunnyDayFront2048.png",
             "textures/TropicalSunnyDay/TropicalSunnyDayBack2048.png",
     };
+    std::vector<std::string> skyboxPaths2 = {
+            "textures/SunSet/SunSetLeft2048.png",
+            "textures/SunSet/SunSetRight2048.png",
+            "textures/SunSet/SunSetUp2048.png",
+            "textures/SunSet/SunSetDown2048.png",
+            "textures/SunSet/SunSetFront2048.png",
+            "textures/SunSet/SunSetBack2048.png",
+    };
     Shader skyboxShader("shaders/SkyboxShader.vert", "shaders/SkyboxShader.frag");
-    Skybox skybox(skyboxPaths);
+    Skybox skybox(skyboxPaths2);
 
     // Necessary OpenGL Parameters
     glEnable(GL_DEPTH_TEST);
@@ -92,8 +100,14 @@ int main()
     gCamera.Position = glm::vec3(0.0f, 10.0f, 20.0f);
     gCamera.MovementSpeed = 5.0f;
 
-    Ocean ocean(glm::vec2(0.2f, 2.0f), 128, 0.02f);
+    Ocean ocean(glm::vec2(0.2f, 2.0f), 128, 0.05f);
     ocean.generateWave((float)glfwGetTime());
+    glm::vec3 deepWaterColorSunset = glm::vec3(powf(0.14f, 2.2f),
+                                         powf(0.15f, 2.2f),
+                                         powf(0.16f, 2.2f));
+    glm::vec3 deepWaterColorSunny = glm::vec3(powf(0.11f, 2.2f),
+                                         powf(0.18f, 2.2f),
+                                         powf(0.35f, 2.2f));
     // Pass the vertex data to GPU
     unsigned int VBO, EBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -130,7 +144,7 @@ int main()
         // Set up view and projection matrix
         glm::mat4 view = gCamera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(gCamera.Zoom),
-                                                (float)gScreenWidth / gScreenHeight, 0.1f, 1000.0f);
+                                                (float)gScreenWidth / gScreenHeight, 0.1f, 10000.0f);
 
         skybox.Draw(skyboxShader, view, projection);
 
@@ -144,8 +158,8 @@ int main()
         shader.setVec3("viewPos", gCamera.Position);
         shader.setVec3("lightDir", glm::vec3(-1.0f, 1.0f, -1.0f));
         shader.setVec3("lightPos", glm::vec3(-1000.0f, -1000.0f, 5000.0f));
-        shader.setVec3("diffuse", glm::vec3(0.0f, 0.1f, 0.2f));
-        shader.setVec3("ambient", glm::vec3(0.2f, 0.3f, 0.7f));
+        shader.setVec3("diffuse",deepWaterColorSunset);
+        shader.setVec3("ambient", deepWaterColorSunset);
         shader.setVec3("specular", glm::vec3(1.0f, 1.0f, 1.0f));
         shader.setInt("heightMap", 0);
         shader.setInt("normalMap", 1);
@@ -219,7 +233,7 @@ GLFWwindow *init()
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create a window object
-    GLFWwindow *window = glfwCreateWindow(gScreenWidth, gScreenHeight, "Window Title", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(gScreenWidth, gScreenHeight, "Ocean", nullptr, nullptr);
     if (window == nullptr) {
         std::cout << "Failed to create GLFW window!" << std::endl;
         glfwTerminate();

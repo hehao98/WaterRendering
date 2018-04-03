@@ -49,4 +49,9 @@ void main()
 
     // Calculate Fresnel Reflection and Refraction
     fragColor = reflectivity * r + (1 - reflectivity) * t;
+
+    float dist = length(viewPos - vec3(fs_in.fragPos));
+    vec4 fogColor = texture(skybox, vec3(-eyeVec.x, 0.0, -eyeVec.z));
+    float fogFactor = 1 - exp(-0.003 * dist);
+    fragColor = mix(fragColor, fogColor, fogFactor);
 }

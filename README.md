@@ -1,5 +1,5 @@
 # OceanSimulator
-This code repository contains my several tries on water/ocean simluation.
+This code repository contains my several experiments on water/ocean simluation.
 
 For detailed information of how this is implemented, please see [my blog][http://www.cnblogs.com/hehao98/](Chinese).
 
@@ -15,4 +15,5 @@ Before running any executable, make sure the `shaders/`,  `textures/`, and `font
 ## Some Results:
 ![Lighting](screenshots/Lighting.gif)
 ![Lighting2](screenshots/Lighting2.gif)
-
+![Lighting3](screenshots/Lighting3.png)
+![Lighting4](screenshots/Lighting4.gif)

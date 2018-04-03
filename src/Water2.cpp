@@ -74,15 +74,15 @@ int main()
             "textures/TropicalSunnyDay/TropicalSunnyDayBack2048.png",
     };
     std::vector<std::string> skyboxPaths2 = {
-            "textures/skybox/right.jpg",
-            "textures/skybox/left.jpg",
-            "textures/skybox/top.jpg",
-            "textures/skybox/bottom.jpg",
-            "textures/skybox/front.jpg",
-            "textures/skybox/back.jpg",
+            "textures/SunSet/SunSetLeft2048.png",
+            "textures/SunSet/SunSetRight2048.png",
+            "textures/SunSet/SunSetUp2048.png",
+            "textures/SunSet/SunSetDown2048.png",
+            "textures/SunSet/SunSetFront2048.png",
+            "textures/SunSet/SunSetBack2048.png",
     };
     Shader skyboxShader("shaders/SkyboxShader.vert", "shaders/SkyboxShader.frag");
-    Skybox skybox(skyboxPaths);
+    Skybox skybox(skyboxPaths2);
 
     // Necessary OpenGL Parameters
     glEnable(GL_DEPTH_TEST);
