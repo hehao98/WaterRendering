@@ -1,7 +1,10 @@
 # OceanSimulator
 This code repository contains my several experiments on water/ocean simluation.
 
-For detailed information of how this is implemented, please see [my blog][http://www.cnblogs.com/hehao98/](Chinese).
+For detailed information of how this is implemented, please see my blog.
+1. http://www.cnblogs.com/hehao98/p/8544121.html
+1. http://www.cnblogs.com/hehao98/p/8604163.html
+1. http://www.cnblogs.com/hehao98/p/8709636.html
 
 ## Dependencies
 
