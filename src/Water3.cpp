@@ -48,7 +48,7 @@ float gLastFrame = 0.0f;
 // Global vaiables and flags
 Camera gCamera;
 bool gDrawNormals = false;
-bool gPause = true;
+bool gPause = false;
 
 int main()
 {
